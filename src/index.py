@@ -1,3 +1,5 @@
-from repositories.todo_repository import todo_repository
+from repositories.user_repository import user_repository
+from entities.user import User
+from gui.gui import gui
 
-print(todo_repository.find_all())
+gui.start()

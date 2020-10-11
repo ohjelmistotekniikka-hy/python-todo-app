@@ -15,7 +15,9 @@ class UserRepository:
 
         cursor.execute('select * from users')
 
-        return list(map(get_user_by_row, cursor.fetchall()))
+        rows = cursor.fetchall()
+
+        return list(map(get_user_by_row, rows))
 
     def find_by_username(self, username):
         cursor = self.connection.cursor()
@@ -25,7 +27,9 @@ class UserRepository:
             (username,)
         )
 
-        return get_user_by_row(cursor.fetchone())
+        row = cursor.fetchone()
+
+        return get_user_by_row(row)
 
     def create(self, user):
         cursor = self.connection.cursor()

@@ -47,15 +47,17 @@ class TestTodoRepository(unittest.TestCase):
         kalle = user_repository.create(self.user_kalle)
         matti = user_repository.create(self.user_matti)
 
-        todo_repository.create(Todo(content = 'testing a', user = kalle))
-        todo_repository.create(Todo(content = 'testing b', user = matti))
+        todo_repository.create(Todo(content='testing a', user=kalle))
+        todo_repository.create(Todo(content='testing b', user=matti))
 
-        kalle_todos = todo_repository.find_by_username(self.user_kalle.username)
+        kalle_todos = todo_repository.find_by_username(
+            self.user_kalle.username)
 
         self.assertEqual(len(kalle_todos), 1)
         self.assertEqual(kalle_todos[0].content, 'testing a')
 
-        matti_todos = todo_repository.find_by_username(self.user_matti.username)
+        matti_todos = todo_repository.find_by_username(
+            self.user_matti.username)
 
         self.assertEqual(len(matti_todos), 1)
         self.assertEqual(matti_todos[0].content, 'testing b')
