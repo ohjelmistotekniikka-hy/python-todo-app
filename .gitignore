@@ -1,0 +1,8 @@
+.vscode
+.DS_Store
+
+# data files
+data/database.sqlite
+data/todos.csv
+data/test-database.sqlite
+data/test-todos.csv
