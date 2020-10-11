@@ -43,7 +43,7 @@ pipenv run start
 Testit suoritetaan komennolla:
 
 ```bash
-PIPENV_DOTENV_LOCATION=.env.test pipenv run test
+pipenv run test
 ```
 
 ### Pylint
