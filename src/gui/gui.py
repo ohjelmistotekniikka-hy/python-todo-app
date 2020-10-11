@@ -4,6 +4,19 @@ from repositories.todo_repository import todo_repository
 from gui.login_view import LoginView
 from gui.todos_view import TodosView
 
+
+def handle_create_todo(todo):
+    todo_repository.create(todo)
+
+
+def handle_delete_todo(todo_id):
+    todo_repository.delete(todo_id)
+
+
+def handle_set_todo_done(todo_id, done=True):
+    todo_repository.set_done(todo_id, done)
+
+
 class Gui:
     def __init__(self, window):
         self.window = window
@@ -21,7 +34,15 @@ class Gui:
 
     def show_todos_view(self):
         todos = todo_repository.find_by_username(self.user.username)
-        self.todos_view = TodosView(self.window, todos, self.user)
+
+        self.todos_view = TodosView(
+            self.window, todos,
+            self.user,
+            handle_set_todo_done,
+            handle_delete_todo,
+            handle_create_todo
+        )
+
         self.todos_view.pack()
 
     def hide_todos_view(self):
@@ -41,14 +62,9 @@ class Gui:
 
         return True
 
-    def handle_create_todo(self, todo):
-        todo_repository.create(todo)
-    
-    def handle_delete_todo(self, todo_id):
-        todo_repository.delete(todo_id)
-
-    def handle_set_todo_done(self, todo_id, done = True):
-        todo_repository.set_done(todo_id, done)
+    def handle_logout(self):
+        self.hide_todos_view()
+        self.show_login_view()
 
     def start(self):
         self.show_login_view()
