@@ -1,20 +1,6 @@
 import tkinter as tk
-from repositories.user_repository import user_repository
-from repositories.todo_repository import todo_repository
 from gui.login_view import LoginView
 from gui.todos_view import TodosView
-
-
-def handle_create_todo(todo):
-    todo_repository.create(todo)
-
-
-def handle_delete_todo(todo_id):
-    todo_repository.delete(todo_id)
-
-
-def handle_set_todo_done(todo_id, done=True):
-    todo_repository.set_done(todo_id, done)
 
 
 class Gui:
@@ -33,14 +19,10 @@ class Gui:
         self.login_view = None
 
     def show_todos_view(self):
-        todos = todo_repository.find_by_username(self.user.username)
-
         self.todos_view = TodosView(
-            self.window, todos,
+            self.window,
             self.user,
-            handle_set_todo_done,
-            handle_delete_todo,
-            handle_create_todo
+            self.handle_logout
         )
 
         self.todos_view.pack()
@@ -49,12 +31,7 @@ class Gui:
         self.todos_view.destroy()
         self.todos_view = None
 
-    def handle_login(self, username, password):
-        user = user_repository.find_by_username(username)
-
-        if not user or user.password != password:
-            return False
-
+    def handle_login(self, user):
         self.user = user
 
         self.hide_login_view()
@@ -63,8 +40,13 @@ class Gui:
         return True
 
     def handle_logout(self):
+        self.user = None
+
         self.hide_todos_view()
         self.show_login_view()
+
+    def handle_create_user(self, user):
+        self.user = user
 
     def start(self):
         self.show_login_view()

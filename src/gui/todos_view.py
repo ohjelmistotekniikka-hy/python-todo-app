@@ -1,18 +1,25 @@
 import tkinter as tk
+from repositories.todo_repository import todo_repository
+
+
+def handle_create_todo(todo):
+    todo_repository.create(todo)
+
+
+def handle_set_todo_done(todo_id, done=True):
+    todo_repository.set_done(todo_id, done)
 
 
 class TodosView:
-    def __init__(self, root, todos, user, handle_set_done, handle_delete, handle_create):
+    def __init__(self, root, user, handle_logout):
         self.root = root
-        self.todos = todos
         self.user = user
-        self.handle_set_done = handle_set_done
-        self.handle_delete = handle_delete
-        self.handle_create = handle_create
+        self.handle_logout = handle_logout
 
         self.initialize()
 
     def initialize(self):
+        self.todos = todo_repository.find_by_username(self.user.username)
         self.frame = tk.Frame(master=self.root)
 
         user_label = tk.Label(

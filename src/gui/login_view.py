@@ -1,5 +1,5 @@
 import tkinter as tk
-
+from repositories.user_repository import user_repository
 
 class LoginView:
     def __init__(self, root, handle_login):
@@ -9,7 +9,15 @@ class LoginView:
         self.initialize()
 
     def login_handler(self, _):
-        self.handle_login(self.username_entry.get(), self.password_entry.get())
+        username = self.username_entry.get()
+        password = self.password_entry.get()
+
+        user = user_repository.find_by_username(username)
+
+        if not user or user.password != password:
+            print('Invalid credetinals')
+        else:
+            self.handle_login(user)
 
     def initialize(self):
         self.frame = tk.Frame(master=self.root)
