@@ -1,52 +1,59 @@
 import tkinter as tk
 from gui.login_view import LoginView
 from gui.todos_view import TodosView
+from gui.create_user_view import CreateUserView
 
 
 class GUI:
     def __init__(self, window):
         self.window = window
-        self.login_view = None
-        self.todos_view = None
-        self.user = None
+        self.current_view = None
+
+    def hide_current_view(self):
+        if self.current_view:
+            self.current_view.destroy()
+
+        self.current_view = None
 
     def show_login_view(self):
-        self.login_view = LoginView(self.window, self.handle_login)
-        self.login_view.pack()
+        self.hide_current_view()
 
-    def hide_login_view(self):
-        self.login_view.destroy()
-        self.login_view = None
-
-    def show_todos_view(self):
-        self.todos_view = TodosView(
+        self.current_view = LoginView(
             self.window,
-            self.user,
-            self.handle_logout
+            self.handle_login,
+            self.handle_show_create_user_view
         )
 
-        self.todos_view.pack()
+        self.current_view.pack()
 
-    def hide_todos_view(self):
-        self.todos_view.destroy()
-        self.todos_view = None
+    def show_todos_view(self):
+        self.hide_current_view()
 
-    def handle_login(self, user):
-        self.user = user
+        self.current_view = TodosView(self.window, self.handle_logout)
 
-        self.hide_login_view()
+        self.current_view.pack()
+
+    def handle_login(self):
         self.show_todos_view()
 
-        return True
-
     def handle_logout(self):
-        self.user = None
-
-        self.hide_todos_view()
         self.show_login_view()
 
-    def handle_create_user(self, user):
-        self.user = user
+    def show_create_user_view(self):
+        self.hide_current_view()
+
+        self.current_view = CreateUserView(
+            self.window,
+            self.handle_create_user
+        )
+
+        self.current_view.pack()
+
+    def handle_create_user(self):
+        self.show_todos_view()
+
+    def handle_show_create_user_view(self):
+        self.show_create_user_view()
 
     def start(self):
         self.show_login_view()

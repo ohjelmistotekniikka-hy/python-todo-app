@@ -1,23 +1,22 @@
 from tkinter import ttk, constants
-from entities.todo import Todo
-from repositories.todo_repository import todo_repository
+from services.todo_service import todo_service
 
 
-def handle_create_todo(todo):
-    todo_repository.create(todo)
+def handle_create_todo(content):
+    return todo_service.create_todo(content)
 
 
-def handle_set_todo_done(root, todo):
-    todo_repository.set_done(todo.id, True)
+def handle_mark_todo_done(root, todo_id):
+    todo_service.mark_done(todo_id)
     root.destroy()
 
 
 class TodosView:
-    def __init__(self, root, user, handle_logout):
+    def __init__(self, root, handle_logout):
         self.root = root
-        self.user = user
         self.handle_logout = handle_logout
-        self.todos = self.get_not_done_todos()
+        self.user = todo_service.get_current_user()
+        self.todos = todo_service.get_undone()
         self.frame = None
         self.todo_list_frame = None
         self.create_todo_entry = None
@@ -25,6 +24,7 @@ class TodosView:
         self.initialize()
 
     def logout_handler(self):
+        todo_service.logout()
         self.handle_logout()
 
     def initialize_todo_item(self, todo):
@@ -35,7 +35,7 @@ class TodosView:
         set_done_button = ttk.Button(
             master=frame,
             text='Done',
-            command=lambda: handle_set_todo_done(frame, todo)
+            command=lambda: handle_mark_todo_done(frame, todo.id)
         )
 
         label.grid(row=0, column=0, padx=5, pady=5, sticky=constants.W)
@@ -85,10 +85,9 @@ class TodosView:
 
     def create_todo_handler(self):
         todo_content = self.create_todo_entry.get()
-        todo = Todo(content=todo_content, user=self.user)
 
         if todo_content:
-            handle_create_todo(todo)
+            todo = handle_create_todo(todo_content)
             self.initialize_todo_item(todo)
             self.create_todo_entry.delete(0, constants.END)
 
@@ -111,12 +110,6 @@ class TodosView:
 
         create_todo_button.grid(row=2, column=1, padx=5,
                                 pady=5, sticky=constants.EW)
-
-    def get_not_done_todos(self):
-        todos = todo_repository.find_by_username(self.user.username)
-        done_todos = filter(lambda todo: not todo.done, todos)
-
-        return list(done_todos)
 
     def initialize(self):
         self.frame = ttk.Frame(master=self.root)

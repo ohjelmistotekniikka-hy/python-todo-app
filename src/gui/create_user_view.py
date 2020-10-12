@@ -2,11 +2,10 @@ from tkinter import ttk, StringVar, constants
 from services.todo_service import todo_service
 
 
-class LoginView:
-    def __init__(self, root, handle_login, handle_show_create_user_view):
+class CreateUserView:
+    def __init__(self, root, handle_create_user):
         self.root = root
-        self.handle_login = handle_login
-        self.handle_show_create_user_view = handle_show_create_user_view
+        self.handle_create_user = handle_create_user
         self.frame = None
         self.username_entry = None
         self.password_entry = None
@@ -19,12 +18,12 @@ class LoginView:
         username = self.username_entry.get()
         password = self.password_entry.get()
 
-        current_user = todo_service.login(username, password)
+        created_user = todo_service.create_user(username, password)
 
-        if current_user:
-            self.handle_login()
+        if created_user:
+            self.handle_create_user()
         else:
-            self.show_error('Invalid username or password')
+            self.show_error(f'Username "{username}" already exists')
 
     def show_error(self, message):
         self.error_variable.set(message)
@@ -71,21 +70,14 @@ class LoginView:
 
         login_button = ttk.Button(
             master=self.frame,
-            text='Login',
+            text='Create',
             command=self.login_handler
-        )
-
-        create_user_button = ttk.Button(
-            master=self.frame,
-            text="Create user",
-            command=self.handle_show_create_user_view
         )
 
         self.frame.grid_columnconfigure(0, weight=0)
         self.frame.grid_columnconfigure(1, weight=1)
 
         login_button.grid(column=1, padx=5, pady=5, sticky=constants.EW)
-        create_user_button.grid(column=1, padx=5, pady=5, sticky=constants.EW)
 
         self.hide_error()
 
