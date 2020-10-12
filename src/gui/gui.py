@@ -3,7 +3,7 @@ from gui.login_view import LoginView
 from gui.todos_view import TodosView
 
 
-class Gui:
+class GUI:
     def __init__(self, window):
         self.window = window
         self.login_view = None
@@ -54,4 +54,8 @@ class Gui:
         self.window.mainloop()
 
 
-gui = Gui(tk.Tk())
+gui_window = tk.Tk()
+
+gui_window.title('TodoApp')
+
+gui = GUI(gui_window)
