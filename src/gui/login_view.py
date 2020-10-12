@@ -6,6 +6,11 @@ class LoginView:
     def __init__(self, root, handle_login):
         self.root = root
         self.handle_login = handle_login
+        self.frame = None
+        self.username_entry = None
+        self.password_entry = None
+        self.error_message = None
+        self.error_label = None
 
         self.initialize()
 

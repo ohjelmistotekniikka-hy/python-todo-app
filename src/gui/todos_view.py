@@ -17,6 +17,10 @@ class TodosView:
         self.root = root
         self.user = user
         self.handle_logout = handle_logout
+        self.todos = self.get_not_done_todos()
+        self.frame = None
+        self.todo_list_frame = None
+        self.create_todo_entry = None
 
         self.initialize()
 
@@ -83,7 +87,13 @@ class TodosView:
         )
 
         self.create_todo_entry.grid(
-            row=2, column=0, padx=5, pady=5, sticky=tk.EW)
+            row=2,
+            column=0,
+            padx=5,
+            pady=5,
+            sticky=tk.EW
+        )
+
         create_todo_button.grid(row=2, column=1, padx=5, pady=5, sticky=tk.EW)
 
     def get_not_done_todos(self):
@@ -93,7 +103,6 @@ class TodosView:
         return list(done_todos)
 
     def initialize(self):
-        self.todos = self.get_not_done_todos()
         self.frame = tk.Frame(master=self.root)
 
         self.initialize_header()
