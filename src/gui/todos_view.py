@@ -7,7 +7,7 @@ def handle_create_todo(content):
 
 
 def handle_mark_todo_done(root, todo_id):
-    todo_service.mark_done(todo_id)
+    todo_service.set_todo_done(todo_id)
     root.destroy()
 
 
@@ -16,7 +16,7 @@ class TodosView:
         self.root = root
         self.handle_logout = handle_logout
         self.user = todo_service.get_current_user()
-        self.todos = todo_service.get_undone()
+        self.todos = todo_service.get_undone_todos()
         self.frame = None
         self.todo_list_frame = None
         self.create_todo_entry = None

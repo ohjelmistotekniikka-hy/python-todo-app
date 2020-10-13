@@ -1,5 +1,5 @@
 from tkinter import ttk, StringVar, constants
-from services.todo_service import todo_service
+from services.todo_service import todo_service, InvalidCredentials
 
 
 class LoginView:
@@ -19,11 +19,10 @@ class LoginView:
         username = self.username_entry.get()
         password = self.password_entry.get()
 
-        current_user = todo_service.login(username, password)
-
-        if current_user:
+        try:
+            todo_service.login(username, password)
             self.handle_login()
-        else:
+        except InvalidCredentials:
             self.show_error('Invalid username or password')
 
     def show_error(self, message):
@@ -38,20 +37,16 @@ class LoginView:
 
         self.username_entry = ttk.Entry(master=self.frame)
 
-        username_label.grid(row=1, column=0, padx=5,
-                            pady=5, sticky=constants.W)
-        self.username_entry.grid(
-            row=1, column=1, padx=5, pady=5, sticky=constants.EW)
+        username_label.grid(padx=5, pady=5, sticky=constants.W)
+        self.username_entry.grid(padx=5, pady=5, sticky=constants.EW)
 
     def initialize_password_field(self):
         password_label = ttk.Label(master=self.frame, text='Password')
 
         self.password_entry = ttk.Entry(master=self.frame)
 
-        password_label.grid(row=2, column=0, padx=5,
-                            pady=5, sticky=constants.W)
-        self.password_entry.grid(
-            row=2, column=1, padx=5, pady=5, sticky=constants.EW)
+        password_label.grid(padx=5, pady=5, sticky=constants.W)
+        self.password_entry.grid(padx=5, pady=5, sticky=constants.EW)
 
     def initialize(self):
         self.frame = ttk.Frame(master=self.root)
@@ -64,7 +59,7 @@ class LoginView:
             foreground='red'
         )
 
-        self.error_label.grid(column=1, columnspan=2, padx=5, pady=5)
+        self.error_label.grid(padx=5, pady=5)
 
         self.initialize_username_field()
         self.initialize_password_field()
@@ -81,11 +76,10 @@ class LoginView:
             command=self.handle_show_create_user_view
         )
 
-        self.frame.grid_columnconfigure(0, weight=0)
-        self.frame.grid_columnconfigure(1, weight=1)
+        self.frame.grid_columnconfigure(0, weight=1)
 
-        login_button.grid(column=1, padx=5, pady=5, sticky=constants.EW)
-        create_user_button.grid(column=1, padx=5, pady=5, sticky=constants.EW)
+        login_button.grid(padx=5, pady=5, sticky=constants.EW)
+        create_user_button.grid(padx=5, pady=5, sticky=constants.EW)
 
         self.hide_error()
 

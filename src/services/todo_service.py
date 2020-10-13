@@ -4,6 +4,14 @@ from repositories.todo_repository import todo_repository
 from repositories.user_repository import user_repository
 
 
+class InvalidCredentials(Exception):
+    pass
+
+
+class UsernameExists(Exception):
+    pass
+
+
 class TodoService:
     def __init__(self):
         self.user = None
@@ -13,7 +21,7 @@ class TodoService:
 
         return todo_repository.create(todo)
 
-    def get_undone(self):
+    def get_undone_todos(self):
         if not self.user:
             return []
 
@@ -22,17 +30,18 @@ class TodoService:
 
         return list(undone_todos)
 
-    def mark_done(self, todo_id):
+    def set_todo_done(self, todo_id):
         todo_repository.set_done(todo_id)
 
     def login(self, username, password):
         user = user_repository.find_by_username(username)
 
-        if user and user.password == password:
-            self.user = user
-            return user
+        if not user or user.password != password:
+            raise InvalidCredentials('Invalid username or password')
 
-        return None
+        self.user = user
+
+        return user
 
     def get_current_user(self):
         return self.user
@@ -44,7 +53,7 @@ class TodoService:
         existing_user = user_repository.find_by_username(username)
 
         if existing_user:
-            return None
+            raise UsernameExists(f'Username {username} already exists')
 
         created_user = user_repository.create(User(username, password))
         self.user = created_user

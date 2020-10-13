@@ -1,11 +1,12 @@
 from tkinter import ttk, StringVar, constants
-from services.todo_service import todo_service
+from services.todo_service import todo_service, UsernameExists
 
 
 class CreateUserView:
-    def __init__(self, root, handle_create_user):
+    def __init__(self, root, handle_create_user, handle_show_login_view):
         self.root = root
         self.handle_create_user = handle_create_user
+        self.handle_show_login_view = handle_show_login_view
         self.frame = None
         self.username_entry = None
         self.password_entry = None
@@ -14,16 +15,19 @@ class CreateUserView:
 
         self.initialize()
 
-    def login_handler(self):
+    def create_user_handler(self):
         username = self.username_entry.get()
         password = self.password_entry.get()
 
-        created_user = todo_service.create_user(username, password)
+        if len(username) == 0 or len(password) == 0:
+            self.show_error('Username and password is required')
+            return
 
-        if created_user:
+        try:
+            todo_service.create_user(username, password)
             self.handle_create_user()
-        else:
-            self.show_error(f'Username "{username}" already exists')
+        except UsernameExists:
+            self.show_error(f'Username {username} already exists')
 
     def show_error(self, message):
         self.error_variable.set(message)
@@ -37,20 +41,16 @@ class CreateUserView:
 
         self.username_entry = ttk.Entry(master=self.frame)
 
-        username_label.grid(row=1, column=0, padx=5,
-                            pady=5, sticky=constants.W)
-        self.username_entry.grid(
-            row=1, column=1, padx=5, pady=5, sticky=constants.EW)
+        username_label.grid(padx=5, pady=5, sticky=constants.W)
+        self.username_entry.grid(padx=5, pady=5, sticky=constants.EW)
 
     def initialize_password_field(self):
         password_label = ttk.Label(master=self.frame, text='Password')
 
         self.password_entry = ttk.Entry(master=self.frame)
 
-        password_label.grid(row=2, column=0, padx=5,
-                            pady=5, sticky=constants.W)
-        self.password_entry.grid(
-            row=2, column=1, padx=5, pady=5, sticky=constants.EW)
+        password_label.grid(padx=5, pady=5, sticky=constants.W)
+        self.password_entry.grid(padx=5, pady=5, sticky=constants.EW)
 
     def initialize(self):
         self.frame = ttk.Frame(master=self.root)
@@ -63,21 +63,27 @@ class CreateUserView:
             foreground='red'
         )
 
-        self.error_label.grid(column=1, columnspan=2, padx=5, pady=5)
+        self.error_label.grid(padx=5, pady=5)
 
         self.initialize_username_field()
         self.initialize_password_field()
 
-        login_button = ttk.Button(
+        create_user_button = ttk.Button(
             master=self.frame,
             text='Create',
-            command=self.login_handler
+            command=self.create_user_handler
         )
 
-        self.frame.grid_columnconfigure(0, weight=0)
-        self.frame.grid_columnconfigure(1, weight=1)
+        login_button = ttk.Button(
+            master=self.frame,
+            text='Login',
+            command=self.handle_show_login_view
+        )
 
-        login_button.grid(column=1, padx=5, pady=5, sticky=constants.EW)
+        self.frame.grid_columnconfigure(0, weight=1)
+
+        create_user_button.grid(padx=5, pady=5, sticky=constants.EW)
+        login_button.grid(padx=5, pady=5, sticky=constants.EW)
 
         self.hide_error()
 
