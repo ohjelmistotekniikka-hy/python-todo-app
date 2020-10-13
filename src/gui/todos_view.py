@@ -6,7 +6,7 @@ def handle_create_todo(content):
     return todo_service.create_todo(content)
 
 
-def handle_mark_todo_done(root, todo_id):
+def handle_set_todo_done(root, todo_id):
     todo_service.set_todo_done(todo_id)
     root.destroy()
 
@@ -35,7 +35,7 @@ class TodosView:
         set_done_button = ttk.Button(
             master=frame,
             text='Done',
-            command=lambda: handle_mark_todo_done(frame, todo.id)
+            command=lambda: handle_set_todo_done(frame, todo.id)
         )
 
         label.grid(row=0, column=0, padx=5, pady=5, sticky=constants.W)
@@ -108,8 +108,13 @@ class TodosView:
             sticky=constants.EW
         )
 
-        create_todo_button.grid(row=2, column=1, padx=5,
-                                pady=5, sticky=constants.EW)
+        create_todo_button.grid(
+            row=2,
+            column=1,
+            padx=5,
+            pady=5,
+            sticky=constants.EW
+        )
 
     def initialize(self):
         self.frame = ttk.Frame(master=self.root)

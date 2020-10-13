@@ -25,6 +25,7 @@ class CreateUserView:
 
         try:
             todo_service.create_user(username, password)
+            todo_service.login(username, password)
             self.handle_create_user()
         except UsernameExists:
             self.show_error(f'Username {username} already exists')

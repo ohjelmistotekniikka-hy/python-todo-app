@@ -55,10 +55,7 @@ class TodoService:
         if existing_user:
             raise UsernameExists(f'Username {username} already exists')
 
-        created_user = user_repository.create(User(username, password))
-        self.user = created_user
-
-        return created_user
+        return user_repository.create(User(username, password))
 
 
 todo_service = TodoService()
