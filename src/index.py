@@ -1,3 +1,3 @@
-from gui.gui import gui
+from ui.ui import ui
 
-gui.start()
+ui.start()

@@ -4,7 +4,7 @@ from gui.todos_view import TodosView
 from gui.create_user_view import CreateUserView
 
 
-class GUI:
+class UI:
     def __init__(self, window):
         self.window = window
         self.current_view = None
@@ -50,8 +50,8 @@ class GUI:
         self.window.mainloop()
 
 
-gui_window = tk.Tk()
+ui_window = tk.Tk()
 
-gui_window.title('TodoApp')
+ui_window.title('TodoApp')
 
-gui = GUI(gui_window)
+ui = UI(ui_window)
