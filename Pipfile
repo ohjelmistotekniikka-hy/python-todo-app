@@ -8,7 +8,7 @@ start = "python src/index.py"
 build = "python src/build.py"
 lint = "pylint src"
 format = "autopep8 --in-place --recursive src"
-test = "python -m pytest"
+test = "pytest"
 coverage = "coverage run -m pytest"
 coverage-report = "coverage report -m"
 
