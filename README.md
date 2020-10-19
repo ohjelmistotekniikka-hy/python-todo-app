@@ -54,11 +54,13 @@ Testikattavuus kerätään kommenolla:
 pipenv run coverage
 ```
 
-Tämän jälkeen raportin voi katsoa komennolla:
+Tämän jälkeen raportin voi generoida komennolla:
 
 ```bash
 pipenv run coverage-report
 ```
+
+Raportti generoituu _htmlcov_-hakemistoon.
 
 ### Pylint
 
