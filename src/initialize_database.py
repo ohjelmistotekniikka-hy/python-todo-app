@@ -5,8 +5,8 @@ def drop_tables(connection):
     cursor = connection.cursor()
 
     cursor.execute('''
-    drop table if exists users;
-  ''')
+        drop table if exists users;
+    ''')
 
     connection.commit()
 
@@ -15,11 +15,11 @@ def create_tables(connection):
     cursor = connection.cursor()
 
     cursor.execute('''
-    create table users (
-      username text primary key,
-      password text
-    );
-  ''')
+        create table users (
+            username text primary key,
+            password text
+        );
+    ''')
 
     connection.commit()
 

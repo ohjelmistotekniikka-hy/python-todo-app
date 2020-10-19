@@ -4,17 +4,9 @@ Sovelluksen avulla käyttäjien on mahdollista pitää kirjaa tekemättömistä�
 
 Sovellus toimii myös Helsingin yliopiston Tietojenkäsittelytieteen kurssin Ohjelmistotekniikan menetelmät referenssisovelluksena. Sovelluksen tarkoituksena on demonstroida erästä tapaa tehdä suurin piirtein täysiin pisteisiin riittävä dokumentaatio sekä testaus projektillesi. Itse ohjelma on sen verran suppea, että saadaksesi kurssilta arvosanan 5 joudut tekemään hieman laajemman sovelluksen.
 
-## Vaatimukset
+## Huomio Python-versiosta
 
-- Sovelluksen toiminta on testattu Python versiolla `3.9.0`. Etenkin vanhempien Python versioiden kanssa saattaa ilmentyä ongelmia. Voit tarkistaa Python versiosi komennolla:
-
-```bash
-python --version
-```
-
-Jos käytössäsi on eri versio, uuden version asennus onnistuu vaivattomasti [pyenv](https://github.com/pyenv/pyenv)-työkalun avulla
-
-- Sovelluksen riippuvuuksien hallinnassa käytetään [pipenv](https://github.com/pypa/pipenv)-kirjastoa, jonka asentaminen on välttämätöntä sovelluksen käytön kannalta
+Sovelluksen toiminta on testattu Python versiolla `3.9.0`. Etenkin vanhempien Python versioiden kanssa saattaa ilmentyä ongelmia.
 
 ## Asennus
 
@@ -70,7 +62,7 @@ pipenv run coverage-report
 
 ### Pylint
 
-Tiedoston [.pylintrc](./.pylintrc) määrittelemät tarkistukset suoritetaan komennolla:
+Tiedoston [.pylintrc](./.pylintrc) määrittelemät tarkistukset voi suorittaa komennolla:
 
 ```bash
 pipenv run lint
