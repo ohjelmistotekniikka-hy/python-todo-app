@@ -1,6 +1,8 @@
 .vscode
 .DS_Store
 .coverage
+.pytest_cache
+htmlcov
 
 # data files
 data/database.sqlite

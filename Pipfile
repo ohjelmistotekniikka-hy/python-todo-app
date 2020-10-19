@@ -9,8 +9,8 @@ build = "python src/build.py"
 lint = "pylint src"
 format = "autopep8 --in-place --recursive src"
 test = "pytest"
-coverage = "coverage run -m pytest"
-coverage-report = "coverage report -m"
+coverage = "coverage run --branch -m pytest"
+coverage-report = "coverage html"
 
 [dev-packages]
 autopep8 = "*"
