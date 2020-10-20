@@ -3,7 +3,11 @@ from repositories.todo_repository import todo_repository
 from repositories.user_repository import user_repository
 from entities.todo import Todo
 from entities.user import User
-from services.todo_service import todo_service, InvalidCredentials, UsernameExists
+from services.todo_service import (
+    todo_service,
+    InvalidCredentials,
+    UsernameExists
+)
 
 
 class TestTodoService(unittest.TestCase):

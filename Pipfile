@@ -13,14 +13,10 @@ coverage = "coverage run --branch -m pytest"
 coverage-report = "coverage html"
 
 [dev-packages]
-autopep8 = "*"
 
 [packages]
 pylint = "*"
-pep8 = "*"
+autopep8 = "*"
 pytest = "*"
 pytest-dotenv = "*"
 coverage = "*"
-
-[requires]
-python_version = "3.9"
