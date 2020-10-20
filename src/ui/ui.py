@@ -1,12 +1,11 @@
-import tkinter as tk
 from ui.login_view import LoginView
 from ui.todos_view import TodosView
 from ui.create_user_view import CreateUserView
 
 
 class UI:
-    def __init__(self, window):
-        self.window = window
+    def __init__(self, root):
+        self.root = root
         self.current_view = None
 
     def hide_current_view(self):
@@ -19,7 +18,7 @@ class UI:
         self.hide_current_view()
 
         self.current_view = LoginView(
-            self.window,
+            self.root,
             self.show_todos_view,
             self.show_create_user_view
         )
@@ -29,7 +28,7 @@ class UI:
     def show_todos_view(self):
         self.hide_current_view()
 
-        self.current_view = TodosView(self.window, self.show_login_view)
+        self.current_view = TodosView(self.root, self.show_login_view)
 
         self.current_view.pack()
 
@@ -37,7 +36,7 @@ class UI:
         self.hide_current_view()
 
         self.current_view = CreateUserView(
-            self.window,
+            self.root,
             self.show_todos_view,
             self.show_login_view
         )
@@ -46,12 +45,3 @@ class UI:
 
     def start(self):
         self.show_login_view()
-
-        self.window.mainloop()
-
-
-ui_window = tk.Tk()
-
-ui_window.title('TodoApp')
-
-ui = UI(ui_window)
