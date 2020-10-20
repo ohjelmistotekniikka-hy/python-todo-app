@@ -1,7 +1,7 @@
 import tkinter as tk
-from gui.login_view import LoginView
-from gui.todos_view import TodosView
-from gui.create_user_view import CreateUserView
+from ui.login_view import LoginView
+from ui.todos_view import TodosView
+from ui.create_user_view import CreateUserView
 
 
 class UI:
