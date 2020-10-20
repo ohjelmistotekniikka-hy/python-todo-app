@@ -8,6 +8,14 @@ Sovellus toimii myös Helsingin yliopiston Tietojenkäsittelytieteen kurssin Ohj
 
 Sovelluksen toiminta on testattu Python versiolla `3.9.0`. Etenkin vanhempien Python versioiden kanssa saattaa ilmentyä ongelmia.
 
+## Dokumentaatio
+
+- [Käyttöohje](./dokumentaatio/kayttoohje.md)
+- [Vaatimusmäärittely](./dokumentaatio/vaatimusmaarittely.md)
+- [Arkkitehtuurikuvaus](./dokumentaatio/arkkitehtuuri.md)
+- [Testausdokumentti](./dokumentaatio/testaus.md)
+- [Työaikakirjanpito](./dokumentaatio/tuntikirjanpito.md)
+
 ## Asennus
 
 1. Asenna riippuvuut komennolla:
