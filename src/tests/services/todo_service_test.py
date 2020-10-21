@@ -76,9 +76,7 @@ class TestTodoService(unittest.TestCase):
 
         self.todo_a = Todo('testing a')
         self.todo_b = Todo('testing b')
-        self.todo_c = Todo('testing c')
         self.user_kalle = User('kalle', 'kalle123')
-        self.user_matti = User('matti', 'matti123')
 
     def login_user(self, user):
         self.todo_service.create_user(user.username, user.password)
