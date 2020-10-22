@@ -63,6 +63,8 @@ class FakeUserRepository:
     def create(self, user):
         self.users.append(user)
 
+        return user
+
     def delete_all(self):
         self.users = []
 
