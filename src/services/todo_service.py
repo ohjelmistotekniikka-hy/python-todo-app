@@ -85,7 +85,7 @@ class TodoService:
         self.todo_repository.set_done(todo_id)
 
     def login(self, username, password):
-        """Luo uuden tehtävän.
+        """Kirjaa käyttäjän sisään.
 
         Args:
             username: Merkkijonoarvo, joka kuvaa kirjautuvan käyttäjän käyttäjätunnusta.
