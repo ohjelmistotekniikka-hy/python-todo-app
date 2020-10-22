@@ -123,7 +123,17 @@ class TestTodoService(unittest.TestCase):
         self.assertEqual(len(undone_todos), 0)
 
     def test_login_with_valid_username_and_password(self):
-        self.login_user(self.user_kalle)
+        self.todo_service.create_user(
+            self.user_kalle.username,
+            self.user_kalle.password
+        )
+
+        user = self.todo_service.login(
+            self.user_kalle.username,
+            self.user_kalle.password
+        )
+
+        self.assertEqual(user.username, self.user_kalle.username)
 
     def test_login_with_invalid_username_and_password(self):
         self.assertRaises(

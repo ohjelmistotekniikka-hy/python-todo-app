@@ -21,19 +21,19 @@ Sovelluksen toiminta on testattu Python versiolla `3.9.0`. Etenkin vanhempien Py
 1. Asenna riippuvuut komennolla:
 
 ```bash
-pipenv install
+python -m pipenv install
 ```
 
 2. Suorita vaadittavat alustustoimenpiteet komennolla:
 
 ```bash
-pipenv run build
+python -m pipenv run build
 ```
 
 3. Käynnistä sovellus komennolla:
 
 ```bash
-pipenv run start
+python -m pipenv run start
 ```
 
 ## Komentorivitoiminnot
@@ -43,7 +43,7 @@ pipenv run start
 Ohjelman pystyy suorittamaan komennolla:
 
 ```bash
-pipenv run start
+python -m pipenv run start
 ```
 
 ### Testaus
@@ -51,7 +51,7 @@ pipenv run start
 Testit suoritetaan komennolla:
 
 ```bash
-pipenv run test
+python -m pipenv run test
 ```
 
 ### Testikattavuus
