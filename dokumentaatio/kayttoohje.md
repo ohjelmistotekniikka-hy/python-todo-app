@@ -1,49 +1,60 @@
-<!-- TODO -->
 # Käyttöohje
 
-Lataa tiedosto [todoapp.jar](https://github.com/mluukkai/OtmTodoApp/releases/tag/0.1)
+Lataa projektin viimeisimmän [releasen](https://github.com/ohjelmistotekniikka-hy/python-todo-app/releases) lähdekooit valitsemalla _Assets_-osion alta _Source code_.
 
 ## Konfigurointi
 
-Ohjelma olettaa, että sen käynnistyshakemistossa on konfiguraatiotiedosto _config.properties_, joka määrittelee käyttäjät ja todot tallettavien tiedostojen nimet. Tiedoston muoto on seuraava
+Tallennukseen käytettävien tiedostojen nimiä voi halutessaan konfiguroida käynnistyshakemistossa _.env_-tiedostossa. Tiedostot luodaan automaattisesti _data_-hakemistoon, jos niitä ei siellä vielä ole. Tiedoston muoto on seuraava:
 
 ```
-userFile=users.txt
-todoFile=todos.txt
+TODOS_FILENAME=todos.csv
+DATABASE_FILENAME=database.sqlite
 ```
 
 ## Ohjelman käynnistäminen
 
-Ohjelma käynnistetään komennolla 
+Ennen ohjelman käynnistämistä, asenna riippuvuudet komennolla:
+
+```bash
+python -m pipenv install
+```
+
+Jonka jälkeen suorita alustustoimenpiteet komennolla:
+
+```bash
+python -m pipenv run build
+```
+
+Nyt ohjelman voi käynnistää komennolla:
 
 ```
-java -jar todoapp.jar
+python -m pipenv run start
 ```
 
 ## Kirjautuminen
 
 Sovellus käynnistyy kirjautumisnäkymään:
 
-<img src="https://raw.githubusercontent.com/mluukkai/OtmTodoApp/master/dokumentaatio/kuvat/k-1.png" width="400">
+![](./kuvat/kayttoohje-kirjautuminen.png)
 
-Kirjautuminen onnistuu kirjoittamalla olemassaoleva käyttäjätunnus syötekenttään ja painamalla _login_.
+Kirjautuminen onnistuu kirjoittamalla olemassaoleva käyttäjätunnus sekä syötekenttään ja painamalla "Login"-painiketta.
 
 ## Uuden käyttäjän luominen
 
-Kirjautumisnäkymästä on mahdollista siirtyä uuden käyttäjän luomisnäkymään panikkeella _create new user_.
+Kirjautumisnäkymästä on mahdollista siirtyä uuden käyttäjän luomisnäkymään panikkeella "Create user".
 
-Uusi käyttäjä luodaan syöttämällä tiedot syötekenttiin ja painamalla _create_
+Uusi käyttäjä luodaan syöttämällä tiedot syötekenttiin ja painamalla "Create"-painiketta:
 
-<img src="https://raw.githubusercontent.com/mluukkai/OtmTodoApp/master/dokumentaatio/kuvat/k-2.png" width="400">
+![](./kuvat/kayttoohje-uusi-kayttaja.png)
 
-Jos käyttäjän luominen onnistuu, palataan kirjautumisnäkymään.
+Jos käyttäjän luominen onnistuu, siirrytään siirrytään käyttäjän tekemättömät työt listaavaan näkymään.
 
 ## Todojen luominen ja tehdyksi merkkaaminen
 
-Onnistuneen kirjautumisen myötä siirrytään käyttäjien tekemättömät työt listaavaan näkymään
+Onnistuneen kirjautumisen myötä siirrytään käyttäjän tekemättömät työt listaavaan näkymään:
 
-<img src="https://raw.githubusercontent.com/mluukkai/OtmTodoApp/master/dokumentaatio/kuvat/k-3.png" width="400">
+![](./kuvat/kayttoohje-tehdyksi-merkkaaminen.png)
 
-Näkymä mahdollistaa olemassaolevien todojen merkkaamisen tehdyksi painikkeella _done_ sekä uusien todojen luomisen kirjoittamalla syötekenttään tehtävän kuvauksen ja painamalla _create_. 
+Näkymä mahdollistaa olemassaolevien todojen merkkaamisen tehdyksi painikkeella "Done" sekä uusien todojen luomisen kirjoittamalla syötekenttään tehtävän kuvauksen ja painamalla "Create"-painiketta.
 
-Klikkaamalla näkymän oikean ylänurkan painiketta _logout_ käyttäjä kirjautuu ulos sovelluksesta ja sovellus palaa takaisin kirjaantumisnäkymään.
+Klikkaamalla näkymän oikean ylänurkan painiketta "Logout" painamalla käyttäjä kirjautuu ulos sovelluksesta ja sovellus palaa takaisin kirjaantumisnäkymään.
