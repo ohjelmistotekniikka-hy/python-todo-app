@@ -127,12 +127,15 @@ class TodoService:
         """
         self.user = None
 
-    def create_user(self, username, password):
-        """Luo uuden käyttäjän.
+    def create_user(self, username, password, login=True):
+        """Luo uuden käyttäjän ja tarvittaessa kirjaa sen sisään.
 
         Args:
-            username: Merkkijono, joka kuvastaa käyttäjän käyttäjätunnusta.
-            password: Merkkijono, joka kuvastaa käyttäjän salasanaa.
+            username: Merkkijonoarvo, joka kuvastaa käyttäjän käyttäjätunnusta.
+            password: Merkkijonoarvo, joka kuvastaa käyttäjän salasanaa.
+            login:
+                Vapaahtoinen, oletusarvo True.
+                Boolean-arvo, joka kertoo kirjataanko käyttäjä sisään onnistuneen luonnin jälkeen.
 
         Raises:
             UsernameExists: Virhe, joka tapahtuu, kun käyttäjätunnus on jo käytössä.
@@ -140,12 +143,18 @@ class TodoService:
         Returns:
             Luotu käyttäjä User-olion muodossa.
         """
+
         existing_user = self.user_repository.find_by_username(username)
 
         if existing_user:
             raise UsernameExists(f'Username {username} already exists')
 
-        return self.user_repository.create(User(username, password))
+        user = self.user_repository.create(User(username, password))
+
+        if login:
+            self.user = user
+
+        return user
 
 
 todo_service = TodoService()

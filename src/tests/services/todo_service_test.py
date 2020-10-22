@@ -80,7 +80,6 @@ class TestTodoService(unittest.TestCase):
 
     def login_user(self, user):
         self.todo_service.create_user(user.username, user.password)
-        self.todo_service.login(user.username, user.password)
 
     def test_create_todo(self):
         self.login_user(self.user_kalle)

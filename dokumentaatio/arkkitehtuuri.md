@@ -3,13 +3,11 @@
 
 ## Rakenne
 
-Ohjelman rakenne koostuu _src_-hakemiston sisällä olevasta koodista. Koodi on organisoitu _entities_-, _repositories_-, _services_-, _tests_- ja _ui_-hakemistoihin:  
+Ohjelman rakenne noudattelee kolmitasoista kerrosarkkitehtuuria, ja koodin pakkausrakenne on seuraava:
 
-- Hakemisto _entities_ sisältää koodia, jonka avulla mallinnetaan sovelluksen käyttämää tietoa
-- Hakemisto _repositories_ sisältää pysyväistallennuksesta vastaavaa koodia
-- Hakemisto _services_ sisältää sovelluslogiikkaan liittyvää koodia
-- Hakemisto _tests_ sisältää testit
-- Hakemisto _ui_ sisältää käyttöliittymään liittyvää koodia
+![Pakkausrakenne](./kuvat/arkkitehtuuri-pakkaus.png)
+
+Pakkaus _ui_ sisältää käyttöliittymästä, _services_ sovelluslogiikasta ja _repositories_ tietojen pysyväistallennuksesta vastaavan koodin. Pakkaus _entities_ sisältää luokkia, jotka kuvastavat sovelluksen käyttämiä tietokohteita.
 
 ## Käyttöliittymä
 
@@ -25,54 +23,45 @@ Kun sovelluksen todo-listan tilanne muuttuu, eli uusi käyttäjä kirjautuu, tod
 
 ## Sovelluslogiikka
 
-Sovelluksen loogisen datamallin muodostavat luokat [User](https://github.com/mluukkai/OtmTodoApp/blob/master/src/main/java/todoapp/domain/User.java) ja [Todo](https://github.com/mluukkai/OtmTodoApp/blob/master/src/main/java/todoapp/domain/Todo.java), jotka kuvaavat käyttäjiä ja käyttäjien tehtäviä:
+Sovelluksen loogisen tietomallin muodostavat luokat [User](https://github.com/ohjelmistotekniikka-hy/python-todo-app/blob/master/src/entities/user.py) ja [Todo](https://github.com/ohjelmistotekniikka-hy/python-todo-app/blob/master/src/entities/todo.py), jotka kuvaavat käyttäjiä ja käyttäjien tehtäviä:
 
-<img src="https://raw.githubusercontent.com/mluukkai/OtmTodoApp/master/dokumentaatio/kuvat/a-2.png" width="400">
+![Tietomalli](./kuvat/tietomalli.png)
 
-Toiminnallisista kokonaisuuksista vastaa luokkan [TodoService](https://github.com/mluukkai/OtmTodoApp/blob/master/src/main/java/todoapp/domain/TodoService.java) ainoa olio. Luokka tarjoaa kaikille käyttäliittymän toiminnoille oman metodin. Näitä ovat esim.
-- boolean login(String username)
-- List<Todo> getUndone() 
-- void createTodo(String content, User user)
-- void markDone(int id)
+Toiminnallisista kokonaisuuksista vastaa luokkan [TodoService](https://github.com/ohjelmistotekniikka-hy/python-todo-app/blob/master/src/services/todo_service.py) ainoa olio. Luokka tarjoaa kaikille käyttäliittymän toiminnoille oman metodin. Näitä ovat esimerkiksi:
 
-_TodoService_ pääsee käsiksi käyttäjiin ja todoihin tietojen tallennuksesta vastaavan pakkauksessa _todoapp.dao_ sijaitsevien rajapinnat _TodoDao_ ja _UserDao_ toteuttavien luokkien kautta. Luokkien toteutuksen [injektoidaan](https://en.wikipedia.org/wiki/Dependency_injection) sovelluslogiikalle konstruktorikutsun yhteydessä.
+- `login(username, password)`
+- `get_undone_todos()`
+- `create_todo(content)`
+- `set_todo_done(todo_id)`
 
-TodoServicen ja ohjelman muiden osien suhdetta kuvaava luokka/pakkauskaavio:
+_TodoService_ pääsee käsiksi käyttäjiin ja todoihin tietojen tallennuksesta vastaavan pakkauksessa _repositories_ sijaitsevien luokkien [TodoRepository](https://github.com/ohjelmistotekniikka-hy/python-todo-app/blob/master/src/repositories/todo_repository.py) ja [UserRepository](https://github.com/ohjelmistotekniikka-hy/python-todo-app/blob/master/src/repositories/user_repository.py) kautta. Luokkien toteutuksen [injektoidaan](https://en.wikipedia.org/wiki/Dependency_injection) sovelluslogiikalle konstruktorikutsun yhteydessä.
 
-<img src="https://raw.githubusercontent.com/mluukkai/OtmTodoApp/master/dokumentaatio/kuvat/a-3c.png" width="450">
+`TodoService`-luokan ja ohjelman muiden osien suhdetta kuvaava luokka/pakkauskaavio:
+
+![Pakkausrakenne ja luokat](./kuvat/arkkitehtuuri-pakkaus-luokat.png)
 
 ## Tietojen pysyväistallennus
 
-Pakkauksen _todoapp.dao_ luokat _FileTodoDao_ ja _FileUserDao_ huolehtivat tietojen tallettamisesta tiedostoihin.
+Pakkauksen _repositories_ luokat `TodoRepository` ja `UserRepository` huolehtivat tietojen tallettamisesta. `TodoRepository`-luokka tallentee tietoa CSV-tiedostoon, kun taas `UserRepository`-luokka SQLite-tietokantaan.
 
-Luokat noudattavat [Data Access Object](https://en.wikipedia.org/wiki/Data_access_object) -suunnittelumallia ja ne on tarvittaessa mahdollista korvata uusilla toteutuksilla, jos sovelluksen datan talletustapaa päätetään vaihtaa. Luokat onkin eristetty rajapintojen _TodoDao_ ja _UserDao_ taakse ja sovelluslogiikka ei käytä luokkia suoraan.
-
-Sovelluslogiikan testauksessa hyödynnetäänkin tätä siten, että testeissä käytetään tiedostoon tallentavien DAO-olioiden sijaan keskusmuistiin tallentavia toteutuksia.
+Luokat noudattavat [Repository](https://en.wikipedia.org/wiki/Data_access_object) -suunnittelumallia ja ne on tarvittaessa mahdollista korvata uusilla toteutuksilla, jos sovelluksen datan talletustapaa päätetään vaihtaa. Sovelluslogiikan testauksessa hyödynnetäänkin tätä siten, että testeissä käytetään tiedostoon ja tietokantaan tallentavien olioiden sijaan keskusmuistiin tallentavia toteutuksia.
 
 ### Tiedostot
 
 Sovellus tallettaa käyttäjien ja todojen tiedot erillisiin tiedostoihin.
 
-Sovelluksen juureen sijoitettu [konfiguraatiotiedosto](https://github.com/mluukkai/OtmTodoApp/blob/master/dokumentaatio/kayttoohje.md#konfiguraatiotiedosto) [config.properties](https://github.com/mluukkai/OtmTodoApp/blob/master/config.properties) määrittelee tiedostojen nimet.
+Sovelluksen juureen sijoitettu [konfiguraatiotiedosto](./kayttoohje.md#konfiguraatiotiedosto) [.env](https://github.com/ohjelmistotekniikka-hy/python-todo-app/blob/master/.env) määrittelee tiedostojen nimet.
 
-Sovellus tallettaa käyttäjät seuraavassa formaatissa
+Sovellus tallettaa tehtävät CSV-tiedostoon seuraavassa formaatissa:
 
-<pre>
-mluukkai;Matti Luukkainen
-hellas;Arto Hellas
-</pre>
+```
+65eef813-330a-4714-887b-2bda4d744487;opiskele pythonia;1;kalle
+5749b61f-f312-45ef-94a1-71a758feee2b;kirjoita dokumentaatio;0;matti
+```
 
-eli ensin käyttäjätunnus ja puolipisteellä erotettuna käyttäjän nimi.
+Eli tehtävän id, sisältö, tehtystatus (0 = ei tehty, 1 = on tehty) ja käyttäjän käyttäjätunnus. Kenttien arvot erotellaan puolipisteellä (;).
 
-Käyttäjien työt tallettavan tiedoston formaatti on seuraava
-
-<pre>
-1;Tiskaa;true;mluukkai
-2;Valmistele OhPen luento;false;hellas
-3;Imuroi ja käy kaupassa;false;mluukkai
-</pre>
-
-Kentät on eroteltu puolipistein. Ensimmäisenä todon tunniste eli _id_, toisena kuvaus, kolmantena tieto siitä onko tehtävä jo suoritettu ja viimeisenä tehtävän luoneen käyttäjän käyttäjätunnus.
+Käyttäjät tallennetaan SQLite-tietokannan tauluun `users`, joka alustetaan [initialize_database.py](https://github.com/ohjelmistotekniikka-hy/python-todo-app/blob/master/src/initialize_database.py)-tiedostossa.
 
 ### Päätoiminnallisuudet
 
@@ -80,11 +69,11 @@ Kuvataan seuraavaksi sovelluksen toimintalogiikka muutaman päätoiminnallisuude
 
 #### käyttäjän kirjaantuminen
 
-Kun kirjautumisnäkymässä on syötekenttään kirjoitettu käyttäjätunnus ja klikataan painiketta _loginButton_ etenee sovelluksen kontrolli seuraavasti:
+Kun kirjautumisnäkymän syötekenttiin kirjoitetetataan käyttäjätunnus ja salasana, jonka jälkeen klikataan painiketta _Login_, etenee sovelluksen kontrolli seuraavasti:
 
-<img src="https://raw.githubusercontent.com/mluukkai/OtmTodoApp/master/dokumentaatio/kuvat/a-4b.png" width="750">
+![](./kuvat/sekvenssi-kirjautuminen.png)
 
-Painikkeen painamiseen reagoiva [tapahtumankäsittelijä](https://github.com/mluukkai/OtmTodoApp/blob/master/src/main/java/todoapp/ui/TodoUi.java#L92) kutsuu sovelluslogiikan _appService_ metodia [login](https://github.com/mluukkai/OtmTodoApp/blob/master/src/main/java/todoapp/domain/TodoService.java#L73) antaen parametriksi kirjautuneen käyttäjätunnuksen. Sovelluslogiikka selvittää _userDao_:n avulla onko käyttäjätunnus olemassa. Jos on, eli kirjautuminen onnistuu, on seurauksena se että käyttöliittymä vaihtaa näkymäksi _todoScenen_, eli sovelluksen varsinaisen päänäkymän ja renderöi näkymään kirjautuneen käyttäjän todot eli tekemättömät työt.
+Painikkeen painamiseen reagoiva [tapahtumankäsittelijä](https://github.com/ohjelmistotekniikka-hy/python-todo-app/blob/master/src/ui/login_view.py#L182) kutsuu sovelluslogiikan `TodoService` metodia [login](https://github.com/mluukkai/OtmTodoApp/blob/master/src/main/java/todoapp/domain/TodoService.java#L73) antaen parametriksi kirjautuneen käyttäjätunnuksen. Sovelluslogiikka selvittää _userDao_:n avulla onko käyttäjätunnus olemassa. Jos on, eli kirjautuminen onnistuu, on seurauksena se että käyttöliittymä vaihtaa näkymäksi _todoScenen_, eli sovelluksen varsinaisen päänäkymän ja renderöi näkymään kirjautuneen käyttäjän todot eli tekemättömät tehtävät.
 
 #### uuden käyttäjän luominen
 

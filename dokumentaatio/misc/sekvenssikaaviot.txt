@@ -1,0 +1,33 @@
+Käyttäjän kirjautuminen
+
+User->+UI: click "Login" button
+UI->+TodoService: login("kalle", "kalle123")
+TodoService->+UserRepository: find_by_username("kalle")
+UserRepository-->-TodoService: user
+TodoService-->-UI: user
+UI->UI: show_todos_view()
+UI-->-User:
+
+Uuden käyttäjän luominen
+
+User->+UI: click "Create user" button
+UI->+TodoService: create_user("matti", "matti123")
+TodoService->+UserRepository: find_by_username("matti")
+UserRepository-->-TodoService: None
+TodoService->*matti: User("matti", "matti123")
+TodoService->UserRepository: create(matti)
+UserRepository-->-TodoService: user
+TodoService-->-UI: user
+UI->UI: show_todos_view()
+UI-->-User:
+
+Todon luominen
+
+User->+UI: click "Create"
+UI->+TodoService: create_todo("vie roskat")
+TodoService->*todo: Todo("vie roskat", kalle)
+TodoService->TodoRepository: create(todo)
+TodoRepository-->-TodoService: todo
+TodoService-->-UI: todo 
+UI->UI: initialize_todo_list()
+UI-->-User: 

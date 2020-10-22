@@ -2,40 +2,23 @@ from tkinter import ttk, constants
 from services.todo_service import todo_service
 
 
-def handle_create_todo(content):
-    return todo_service.create_todo(content)
-
-
-def handle_set_todo_done(root, todo_id):
-    todo_service.set_todo_done(todo_id)
-    root.destroy()
-
-
-class TodosView:
-    def __init__(self, root, handle_logout):
+class TodoListView:
+    def __init__(self, root, todos, handle_set_todo_done):
         self.root = root
-        self.handle_logout = handle_logout
-        self.user = todo_service.get_current_user()
-        self.todos = todo_service.get_undone_todos()
+        self.todos = todos
+        self.handle_set_todo_done = handle_set_todo_done
         self.frame = None
-        self.todo_list_frame = None
-        self.create_todo_entry = None
 
         self.initialize()
 
-    def logout_handler(self):
-        todo_service.logout()
-        self.handle_logout()
-
     def initialize_todo_item(self, todo):
-        frame = ttk.Frame(master=self.todo_list_frame)
-
-        label = ttk.Label(master=frame, text=todo.content)
+        item_frame = ttk.Frame(master=self.frame)
+        label = ttk.Label(master=item_frame, text=todo.content)
 
         set_done_button = ttk.Button(
-            master=frame,
+            master=item_frame,
             text='Done',
-            command=lambda: handle_set_todo_done(frame, todo.id)
+            command=lambda: self.handle_set_todo_done(todo.id)
         )
 
         label.grid(row=0, column=0, padx=5, pady=5, sticky=constants.W)
@@ -48,18 +31,55 @@ class TodosView:
             sticky=constants.EW
         )
 
-        frame.grid_columnconfigure(0, weight=1)
+        item_frame.grid_columnconfigure(0, weight=1)
+        item_frame.pack(fill=constants.X)
 
-        frame.pack(fill=constants.X)
-
-    def initialize_todo_list(self):
-        self.todo_list_frame = ttk.Frame(master=self.frame)
+    def initialize(self):
+        self.frame = ttk.Frame(master=self.root)
 
         for todo in self.todos:
             self.initialize_todo_item(todo)
 
-        self.todo_list_frame.grid(
-            row=1, column=0, columnspan=2, sticky=constants.EW)
+    def pack(self):
+        self.frame.pack(fill=constants.X)
+
+    def destroy(self):
+        self.frame.destroy()
+
+
+class TodosView:
+    def __init__(self, root, handle_logout):
+        self.root = root
+        self.handle_logout = handle_logout
+        self.user = todo_service.get_current_user()
+        self.frame = None
+        self.create_todo_entry = None
+        self.todo_list_frame = None
+        self.todo_list_view = None
+
+        self.initialize()
+
+    def logout_handler(self):
+        todo_service.logout()
+        self.handle_logout()
+
+    def handle_set_todo_done(self, todo_id):
+        todo_service.set_todo_done(todo_id)
+        self.initialize_todo_list()
+
+    def initialize_todo_list(self):
+        if self.todo_list_view:
+            self.todo_list_view.destroy()
+
+        todos = todo_service.get_undone_todos()
+
+        self.todo_list_view = TodoListView(
+            self.todo_list_frame,
+            todos,
+            self.handle_set_todo_done
+        )
+
+        self.todo_list_view.pack()
 
     def initialize_header(self):
         user_label = ttk.Label(
@@ -83,12 +103,12 @@ class TodosView:
             sticky=constants.EW
         )
 
-    def create_todo_handler(self):
+    def handle_create_todo(self):
         todo_content = self.create_todo_entry.get()
 
         if todo_content:
-            todo = handle_create_todo(todo_content)
-            self.initialize_todo_item(todo)
+            todo_service.create_todo(todo_content)
+            self.initialize_todo_list()
             self.create_todo_entry.delete(0, constants.END)
 
     def initialize_footer(self):
@@ -97,7 +117,7 @@ class TodosView:
         create_todo_button = ttk.Button(
             master=self.frame,
             text='Create',
-            command=self.create_todo_handler
+            command=self.handle_create_todo
         )
 
         self.create_todo_entry.grid(
@@ -118,10 +138,18 @@ class TodosView:
 
     def initialize(self):
         self.frame = ttk.Frame(master=self.root)
+        self.todo_list_frame = ttk.Frame(master=self.frame)
 
         self.initialize_header()
         self.initialize_todo_list()
         self.initialize_footer()
+
+        self.todo_list_frame.grid(
+            row=1,
+            column=0,
+            columnspan=2,
+            sticky=constants.EW
+        )
 
         self.frame.grid_columnconfigure(0, weight=1)
         self.frame.grid_columnconfigure(1, weight=0)
