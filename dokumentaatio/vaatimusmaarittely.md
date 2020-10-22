@@ -1,4 +1,3 @@
-<!-- TODO -->
 # Vaatimusmäärittely
 
 ## Sovelluksen tarkoitus
@@ -13,7 +12,7 @@ Alkuvaiheessa sovelluksella on ainoastaan yksi käyttäjärooli eli _normaali k�
 
 Sovellus koostuu kolmesta eri näkymästä
 
-<img src="https://raw.githubusercontent.com/mluukkai/OtmTodoApp/master/dokumentaatio/kuvat/v-1.png" width="750">
+![](./kuvat/kayttoliittyma-hahmotelma.png)
 
 Sovellus aukeaa kirjautumisnäkymään, josta on mahdollista siirtyä uuden käyttäjän luomisnäkymään tai onnistuneen kirjautumisen yhteydessä kirjaantuneen käyttäjän tehtävälistaan.
 
@@ -21,35 +20,30 @@ Sovellus aukeaa kirjautumisnäkymään, josta on mahdollista siirtyä uuden käy
 
 ### Ennen kirjautumista
 
-- käyttäjä voi luoda järjestelmään käyttäjätunnuksen
-  - käyttäjätunnuksen täytyy olla uniikki ja pituudeltaan vähintään 3 merkkiä
-
-- käyttäjä voi kirjautua järjestelmään
-  - kirjautuminen onnistuu syötettäessä olemassaoleva käyttäjätunnus kirjautumislomakkeelle
-  - jos käyttäjää ei olemassa, ilmoittaa järjestelmä tästä
+- Käyttäjä voi luoda järjestelmään käyttäjätunnuksen
+  - Käyttäjätunnuksen täytyy olla uniikki ja pituudeltaan vähintään 3 merkkiä
+- Käyttäjä voi kirjautua järjestelmään
+  - Kirjautuminen onnistuu syötettäessä olemassaoleva käyttäjätunnus ja salasana kirjautumislomakkeelle
+  - Jos käyttäjää ei olemassa, tai salasana ei täsmää, ilmoittaa järjestelmä tästä
 
 ### Kirjautumisen jälkeen
 
-- käyttäjä näkee omat tekemättömät työt eli _todot_
-
-- käyttäjä voi luoda uuden todon
-  - luotu todo näkyy ainoastaan sen luoneelle käyttäjälle
-
-- käyttäjä voi merkitä todon tehdyksi, jolloin todo häviää listalta
-
-- käyttäjä voi kirjautua ulos järjestelmästä
+- Käyttäjä näkee omat tekemättömät työt eli _todot_
+- Käyttäjä voi luoda uuden todon
+  - Luotu todo näkyy ainoastaan sen luoneelle käyttäjälle
+- Käyttäjä voi merkitä todon tehdyksi, jolloin todo häviää listalta
+- Käyttäjä voi kirjautua ulos järjestelmästä
 
 ## Jatkokehitysideoita
 
-Perusversion jälkeen järjestelmää täydennetään ajan salliessa esim. seuraavilla toiminnallisuuksilla
+Perusversion jälkeen järjestelmää täydennetään ajan salliessa esim. seuraavilla toiminnallisuuksilla:
 
-- tehdyksi merkittyjen todojen tarkastelu
-- tehdyksi merkittyjen todojen merkkaaminen tekemättömiksi
-- todon tietojen editointi
-- todojen järjestely tärkeysjärjestykseen
-- todojen määrittely muille käyttäjille
-- käyttäjätiimit, jotka näkevät kaikki yhteiset todot
-- mahdollisuus useampaan erilliseen todo-listaan
-- lisätään todoon kenttä, johon on mahdollista merkitä tarkempia todoon liittyviä tietoja
-- käyttäjien yhteyteen salasana, joka vaaditaan kirjautuessa
-- käyttäjätunnuksen (ja siihen liittyvien todojen) poisto
+- Tehdyksi merkittyjen todojen tarkastelu
+- Tehdyksi merkittyjen todojen merkkaaminen tekemättömiksi
+- Todon tietojen editointi
+- Todojen järjestely tärkeysjärjestykseen
+- Todojen määrittely muille käyttäjille
+- Käyttäjätiimit, jotka näkevät kaikki yhteiset todot
+- Mahdollisuus useampaan erilliseen todo-listaan
+- Lisätään todoon kenttä, johon on mahdollista merkitä tarkempia todoon liittyviä tietoja
+- Käyttäjätunnuksen (ja siihen liittyvien todojen) poisto
