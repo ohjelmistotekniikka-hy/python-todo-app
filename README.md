@@ -59,13 +59,13 @@ python -m pipenv run test
 Testikattavuus kerätään kommenolla:
 
 ```bash
-pipenv run coverage
+python -m pipenv run coverage
 ```
 
 Tämän jälkeen raportin voi generoida komennolla:
 
 ```bash
-pipenv run coverage-report
+python -m pipenv run coverage-report
 ```
 
 Raportti generoituu _htmlcov_-hakemistoon.
@@ -75,5 +75,5 @@ Raportti generoituu _htmlcov_-hakemistoon.
 Tiedoston [.pylintrc](./.pylintrc) määrittelemät tarkistukset voi suorittaa komennolla:
 
 ```bash
-pipenv run lint
+python -m pipenv run lint
 ```
