@@ -151,7 +151,7 @@ class TodosView:
             sticky=constants.EW
         )
 
-        self.frame.grid_columnconfigure(0, weight=1)
+        self.frame.grid_columnconfigure(0, weight=1, minsize=400)
         self.frame.grid_columnconfigure(1, weight=0)
 
     def pack(self):

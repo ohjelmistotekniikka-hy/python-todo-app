@@ -80,7 +80,7 @@ class CreateUserView:
             command=self.handle_show_login_view
         )
 
-        self.frame.grid_columnconfigure(0, weight=1)
+        self.frame.grid_columnconfigure(0, weight=1, minsize=400)
 
         create_user_button.grid(padx=5, pady=5, sticky=constants.EW)
         login_button.grid(padx=5, pady=5, sticky=constants.EW)
