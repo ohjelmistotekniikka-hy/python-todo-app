@@ -16,19 +16,19 @@ DATABASE_FILENAME=database.sqlite
 Ennen ohjelman käynnistämistä, asenna riippuvuudet komennolla:
 
 ```bash
-python -m pipenv install
+python3 -m pipenv install
 ```
 
 Jonka jälkeen suorita alustustoimenpiteet komennolla:
 
 ```bash
-python -m pipenv run build
+python3 -m pipenv run build
 ```
 
 Nyt ohjelman voi käynnistää komennolla:
 
 ```
-python -m pipenv run start
+python3 -m pipenv run start
 ```
 
 ## Kirjautuminen

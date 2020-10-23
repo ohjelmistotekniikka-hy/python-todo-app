@@ -6,7 +6,7 @@ Sovellus toimii myös Helsingin yliopiston Tietojenkäsittelytieteen kurssin Ohj
 
 ## Huomio Python-versiosta
 
-Sovelluksen toiminta on testattu Python versiolla `3.9.0`. Etenkin vanhempien Python versioiden kanssa saattaa ilmentyä ongelmia.
+Sovelluksen toiminta on testattu Python-versiolla `3.9.0`. Etenkin vanhempien Python-versioiden kanssa saattaa ilmentyä ongelmia.
 
 ## Dokumentaatio
 
@@ -21,19 +21,19 @@ Sovelluksen toiminta on testattu Python versiolla `3.9.0`. Etenkin vanhempien Py
 1. Asenna riippuvuut komennolla:
 
 ```bash
-python -m pipenv install
+python3 -m pipenv install
 ```
 
 2. Suorita vaadittavat alustustoimenpiteet komennolla:
 
 ```bash
-python -m pipenv run build
+python3 -m pipenv run build
 ```
 
 3. Käynnistä sovellus komennolla:
 
 ```bash
-python -m pipenv run start
+python3 -m pipenv run start
 ```
 
 ## Komentorivitoiminnot
@@ -43,7 +43,7 @@ python -m pipenv run start
 Ohjelman pystyy suorittamaan komennolla:
 
 ```bash
-python -m pipenv run start
+python3 -m pipenv run start
 ```
 
 ### Testaus
@@ -51,7 +51,7 @@ python -m pipenv run start
 Testit suoritetaan komennolla:
 
 ```bash
-python -m pipenv run test
+python3 -m pipenv run test
 ```
 
 ### Testikattavuus
@@ -59,13 +59,13 @@ python -m pipenv run test
 Testikattavuus kerätään kommenolla:
 
 ```bash
-python -m pipenv run coverage
+python3 -m pipenv run coverage
 ```
 
 Tämän jälkeen raportin voi generoida komennolla:
 
 ```bash
-python -m pipenv run coverage-report
+python3 -m pipenv run coverage-report
 ```
 
 Raportti generoituu _htmlcov_-hakemistoon.
@@ -75,5 +75,5 @@ Raportti generoituu _htmlcov_-hakemistoon.
 Tiedoston [.pylintrc](./.pylintrc) määrittelemät tarkistukset voi suorittaa komennolla:
 
 ```bash
-python -m pipenv run lint
+python3 -m pipenv run lint
 ```
