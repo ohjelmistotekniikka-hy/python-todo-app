@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "python-todo-app"
+version = "0.1.0"
+description = ""
+authors = ["Kalle Ilves <kalleilv@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.6"
+python-dotenv = "^0.15.0"
+taskipy = "^1.4.0"
+
+[tool.poetry.dev-dependencies]
+pylint = "^2.6.0"
+autopep8 = "^1.5.4"
+pytest = "^6.1.2"
+pytest-dotenv = "^0.5.2"
+coverage = "^5.3"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.taskipy.tasks]
+start = "python3 src/index.py"
+build = "python3 src/build.py"
+lint = "pylint src"
+format = "autopep8 --in-place --recursive src"
+test = "pytest"
+coverage = "coverage run --branch -m pytest"
+coverage-report = "coverage html"
