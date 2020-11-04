@@ -39,4 +39,4 @@ Kaikki [määrittelydokumentin](./vaatimusmaarittely.md#perusversion-tarjoama-to
 Sovellus ei anna tällä hetkellä järkeviä virheilmoituksia, seuraavissa tilanteissa:
 
 - Konfiguraation määrittelemiin tiedostoihin ei ole luku/kirjoitusoikeuksia
-- SQLite tietokantaa ei ole alustettu, eli `python -m pipenv run build`-komentoa ei ole suoritettu
+- SQLite tietokantaa ei ole alustettu, eli `python -m poetry run invoke build`-komentoa ei ole suoritettu

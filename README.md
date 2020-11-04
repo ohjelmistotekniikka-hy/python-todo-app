@@ -59,7 +59,7 @@ python3 -m poetry run invoke test
 Testikattavuusraportin voi generoida komennolla:
 
 ```bash
-python3 -m poetry run invoke coveragereport
+python3 -m poetry run invoke coverage-report
 ```
 
 Raportti generoituu _htmlcov_-hakemistoon.
