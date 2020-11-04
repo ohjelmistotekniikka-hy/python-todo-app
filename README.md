@@ -27,13 +27,13 @@ python3 -m poetry install
 2. Suorita vaadittavat alustustoimenpiteet komennolla:
 
 ```bash
-python3 -m poetry run task build
+python3 -m poetry run poe build
 ```
 
 3. Käynnistä sovellus komennolla:
 
 ```bash
-python3 -m poetry run task start
+python3 -m poetry run poe start
 ```
 
 ## Komentorivitoiminnot
@@ -43,7 +43,7 @@ python3 -m poetry run task start
 Ohjelman pystyy suorittamaan komennolla:
 
 ```bash
-python3 -m poetry run task start
+python3 -m poetry run poe start
 ```
 
 ### Testaus
@@ -51,7 +51,7 @@ python3 -m poetry run task start
 Testit suoritetaan komennolla:
 
 ```bash
-python3 -m poetry run task test
+python3 -m poetry run poe test
 ```
 
 ### Testikattavuus
@@ -59,13 +59,13 @@ python3 -m poetry run task test
 Testikattavuus kerätään kommenolla:
 
 ```bash
-python3 -m poetry run task coverage
+python3 -m poetry run poe coverage
 ```
 
 Tämän jälkeen raportin voi generoida komennolla:
 
 ```bash
-python3 -m poetry run task coverage-report
+python3 -m poetry run poe coverage-report
 ```
 
 Raportti generoituu _htmlcov_-hakemistoon.
@@ -75,5 +75,5 @@ Raportti generoituu _htmlcov_-hakemistoon.
 Tiedoston [.pylintrc](./.pylintrc) määrittelemät tarkistukset voi suorittaa komennolla:
 
 ```bash
-python3 -m poetry run task lint
+python3 -m poetry run poe lint
 ```
