@@ -21,19 +21,19 @@ Sovelluksen toiminta on testattu Python-versiolla `3.6.0`. Etenkin vanhempien Py
 1. Asenna riippuvuut komennolla:
 
 ```bash
-python3 -m poetry install
+poetry install
 ```
 
 2. Suorita vaadittavat alustustoimenpiteet komennolla:
 
 ```bash
-python3 -m poetry run invoke build
+poetry run invoke build
 ```
 
 3. Käynnistä sovellus komennolla:
 
 ```bash
-python3 -m poetry run invoke start
+poetry run invoke start
 ```
 
 ## Komentorivitoiminnot
@@ -43,7 +43,7 @@ python3 -m poetry run invoke start
 Ohjelman pystyy suorittamaan komennolla:
 
 ```bash
-python3 -m poetry run invoke start
+poetry run invoke start
 ```
 
 ### Testaus
@@ -51,7 +51,7 @@ python3 -m poetry run invoke start
 Testit suoritetaan komennolla:
 
 ```bash
-python3 -m poetry run invoke test
+poetry run invoke test
 ```
 
 ### Testikattavuus
@@ -59,7 +59,7 @@ python3 -m poetry run invoke test
 Testikattavuusraportin voi generoida komennolla:
 
 ```bash
-python3 -m poetry run invoke coverage-report
+poetry run invoke coverage-report
 ```
 
 Raportti generoituu _htmlcov_-hakemistoon.
@@ -69,5 +69,5 @@ Raportti generoituu _htmlcov_-hakemistoon.
 Tiedoston [.pylintrc](./.pylintrc) määrittelemät tarkistukset voi suorittaa komennolla:
 
 ```bash
-python3 -m poetry run invoke lint
+poetry run invoke lint
 ```
