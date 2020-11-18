@@ -3,8 +3,8 @@ from entities.todo import Todo
 from entities.user import User
 from services.todo_service import (
     TodoService,
-    InvalidCredentials,
-    UsernameExists
+    InvalidCredentialsError,
+    UsernameExistsError
 )
 
 
@@ -137,7 +137,7 @@ class TestTodoService(unittest.TestCase):
 
     def test_login_with_invalid_username_and_password(self):
         self.assertRaises(
-            InvalidCredentials,
+            InvalidCredentialsError,
             lambda: self.todo_service.login('testing', 'invalid')
         )
 
@@ -165,6 +165,6 @@ class TestTodoService(unittest.TestCase):
         self.todo_service.create_user(username, 'something')
 
         self.assertRaises(
-            UsernameExists,
+            UsernameExistsError,
             lambda: self.todo_service.create_user(username, 'random')
         )

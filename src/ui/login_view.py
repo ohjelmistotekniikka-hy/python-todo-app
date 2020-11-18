@@ -1,5 +1,5 @@
 from tkinter import ttk, StringVar, constants
-from services.todo_service import todo_service, InvalidCredentials
+from services.todo_service import todo_service, InvalidCredentialsError
 
 
 class LoginView:
@@ -22,7 +22,7 @@ class LoginView:
         try:
             todo_service.login(username, password)
             self.handle_login()
-        except InvalidCredentials:
+        except InvalidCredentialsError:
             self.show_error('Invalid username or password')
 
     def show_error(self, message):

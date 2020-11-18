@@ -10,11 +10,11 @@ from repositories.user_repository import (
 )
 
 
-class InvalidCredentials(Exception):
+class InvalidCredentialsError(Exception):
     pass
 
 
-class UsernameExists(Exception):
+class UsernameExistsError(Exception):
     pass
 
 
@@ -93,14 +93,14 @@ class TodoService:
         Returns:
             Kirjautunut käyttäjä User-olion muodossa.
         Raises:
-            InvalidCredentials:
+            InvalidCredentialsError:
                 Virhe, joka tapahtuu, kun käyttäjätunnus ja salasana eivät täsmää.
         """
 
         user = self.user_repository.find_by_username(username)
 
         if not user or user.password != password:
-            raise InvalidCredentials('Invalid username or password')
+            raise InvalidCredentialsError('Invalid username or password')
 
         self.user = user
 
@@ -138,7 +138,7 @@ class TodoService:
                 Boolean-arvo, joka kertoo kirjataanko käyttäjä sisään onnistuneen luonnin jälkeen.
 
         Raises:
-            UsernameExists: Virhe, joka tapahtuu, kun käyttäjätunnus on jo käytössä.
+            UsernameExistsError: Virhe, joka tapahtuu, kun käyttäjätunnus on jo käytössä.
 
         Returns:
             Luotu käyttäjä User-olion muodossa.
@@ -147,7 +147,7 @@ class TodoService:
         existing_user = self.user_repository.find_by_username(username)
 
         if existing_user:
-            raise UsernameExists(f'Username {username} already exists')
+            raise UsernameExistsError(f'Username {username} already exists')
 
         user = self.user_repository.create(User(username, password))
 

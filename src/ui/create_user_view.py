@@ -1,5 +1,5 @@
 from tkinter import ttk, StringVar, constants
-from services.todo_service import todo_service, UsernameExists
+from services.todo_service import todo_service, UsernameExistsError
 
 
 class CreateUserView:
@@ -26,7 +26,7 @@ class CreateUserView:
         try:
             todo_service.create_user(username, password)
             self.handle_create_user()
-        except UsernameExists:
+        except UsernameExistsError:
             self.show_error(f'Username {username} already exists')
 
     def show_error(self, message):
