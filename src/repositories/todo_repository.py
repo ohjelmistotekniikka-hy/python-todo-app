@@ -6,18 +6,58 @@ from config import TODOS_FILE_PATH
 
 class TodoRepository:
     def __init__(self, file_path):
-        self.file_path = file_path
+        self._file_path = file_path
 
-    def ensure_file_exists(self):
-        # The touch method will create the file if it doesn't exist
-        Path(self.file_path).touch()
+    def find_all(self):
+        return self._read()
 
-    def read(self):
+    def find_by_username(self, username):
+        todos = self.find_all()
+
+        user_todos = filter(
+            lambda todo: todo.user and todo.user.username == username, todos)
+
+        return list(user_todos)
+
+    def create(self, todo):
+        todos = self.find_all()
+
+        todos.append(todo)
+
+        self._write(todos)
+
+        return todo
+
+    def set_done(self, todo_id, done=True):
+        todos = self.find_all()
+
+        for todo in todos:
+            if todo.id == todo_id:
+                todo.done = done
+                break
+
+        self._write(todos)
+
+    def delete(self, todo_id):
+        todos = self.find_all()
+
+        todos_without_id = filter(lambda todo: todo.id != todo_id, todos)
+
+        self._write(todos_without_id)
+
+    def delete_all(self):
+        self._write([])
+
+    def _ensure_file_exists(self):
+        # luodaan tiedosto, jos se ei ole vielä olemassa
+        Path(self._file_path).touch()
+
+    def _read(self):
         todos = []
 
-        self.ensure_file_exists()
+        self._ensure_file_exists()
 
-        with open(self.file_path) as file:
+        with open(self._file_path) as file:
             for row in file:
                 row = row.replace('\n', '')
                 parts = row.split(';')
@@ -36,10 +76,10 @@ class TodoRepository:
 
         return todos
 
-    def write(self, todos):
-        self.ensure_file_exists()
+    def _write(self, todos):
+        self._ensure_file_exists()
 
-        with open(self.file_path, 'w') as file:
+        with open(self._file_path, 'w') as file:
             for todo in todos:
                 done_string = '1' if todo.done else '0'
                 username = todo.user.username if todo.user else ''
@@ -47,46 +87,6 @@ class TodoRepository:
                 row = f'{todo.id};{todo.content};{done_string};{username}'
 
                 file.write(row+'\n')
-
-    def find_all(self):
-        return self.read()
-
-    def find_by_username(self, username):
-        todos = self.find_all()
-
-        user_todos = filter(
-            lambda todo: todo.user and todo.user.username == username, todos)
-
-        return list(user_todos)
-
-    def create(self, todo):
-        todos = self.find_all()
-
-        todos.append(todo)
-
-        self.write(todos)
-
-        return todo
-
-    def set_done(self, todo_id, done=True):
-        todos = self.find_all()
-
-        for todo in todos:
-            if todo.id == todo_id:
-                todo.done = done
-                break
-
-        self.write(todos)
-
-    def delete(self, todo_id):
-        todos = self.find_all()
-
-        todos_without_id = filter(lambda todo: todo.id != todo_id, todos)
-
-        self.write(todos_without_id)
-
-    def delete_all(self):
-        self.write([])
 
 
 todo_repository = TodoRepository(TODOS_FILE_PATH)

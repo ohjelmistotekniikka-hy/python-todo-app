@@ -19,13 +19,7 @@ class UsernameExistsError(Exception):
 
 
 class TodoService:
-    """Sovelluslogiikasta vastaa luokka.
-
-    Attributes:
-        user: User-olio, joka kuvaa soovellukseen kirjautunutta käyttäjää.
-        todo_repository: Olio, jolla on TodoRepository-luokkaa vastaavat metodit.
-        user_repository: Olio, jolla on UserRepository-luokkaa vastaavat metodit.
-    """
+    """Sovelluslogiikasta vastaa luokka."""
 
     def __init__(
         self,
@@ -42,9 +36,9 @@ class TodoService:
                 Vapaaehtoinen, oletusarvoltaan UserRepository-olio.
                 Olio, jolla on UserRepository-luokkaa vastaavat metodit.
         """
-        self.user = None
-        self.todo_repository = todo_repository
-        self.user_repository = user_repository
+        self._user = None
+        self._todo_repository = todo_repository
+        self._user_repository = user_repository
 
     def create_todo(self, content):
         """Luo uuden tehtävän.
@@ -55,9 +49,9 @@ class TodoService:
             Luotu tehtävä Todo-olion muodossa.
         """
 
-        todo = Todo(content=content, user=self.user)
+        todo = Todo(content=content, user=self._user)
 
-        return self.todo_repository.create(todo)
+        return self._todo_repository.create(todo)
 
     def get_undone_todos(self):
         """Palauttaa kirjautuneen käyttäjän tekemättömät tehtävät.
@@ -67,10 +61,10 @@ class TodoService:
             Jos kirjautunutta käyttäjää ei ole, palauttaa tyhjän listan.
         """
 
-        if not self.user:
+        if not self._user:
             return []
 
-        todos = self.todo_repository.find_by_username(self.user.username)
+        todos = self._todo_repository.find_by_username(self._user.username)
         undone_todos = filter(lambda todo: not todo.done, todos)
 
         return list(undone_todos)
@@ -82,7 +76,7 @@ class TodoService:
             todo_id: Merkkijonoarvo, joka kuvaa tehtävän id:tä.
         """
 
-        self.todo_repository.set_done(todo_id)
+        self._todo_repository.set_done(todo_id)
 
     def login(self, username, password):
         """Kirjaa käyttäjän sisään.
@@ -97,12 +91,12 @@ class TodoService:
                 Virhe, joka tapahtuu, kun käyttäjätunnus ja salasana eivät täsmää.
         """
 
-        user = self.user_repository.find_by_username(username)
+        user = self._user_repository.find_by_username(username)
 
         if not user or user.password != password:
             raise InvalidCredentialsError('Invalid username or password')
 
-        self.user = user
+        self._user = user
 
         return user
 
@@ -112,7 +106,7 @@ class TodoService:
         Returns:
             Kirjautunut käyttäjä User-olion muodossa.
         """
-        return self.user
+        return self._user
 
     def get_users(self):
         """Palauttaa kaikki käyttäjät.
@@ -120,12 +114,12 @@ class TodoService:
         Returns:
             User-oliota sisältä lista kaikista käyttäjistä.
         """
-        return self.user_repository.find_all()
+        return self._user_repository.find_all()
 
     def logout(self):
         """Kirjaa nykyisen käyttäjän ulos.
         """
-        self.user = None
+        self._user = None
 
     def create_user(self, username, password, login=True):
         """Luo uuden käyttäjän ja tarvittaessa kirjaa sen sisään.
@@ -144,15 +138,15 @@ class TodoService:
             Luotu käyttäjä User-olion muodossa.
         """
 
-        existing_user = self.user_repository.find_by_username(username)
+        existing_user = self._user_repository.find_by_username(username)
 
         if existing_user:
             raise UsernameExistsError(f'Username {username} already exists')
 
-        user = self.user_repository.create(User(username, password))
+        user = self._user_repository.create(User(username, password))
 
         if login:
-            self.user = user
+            self._user = user
 
         return user
 
