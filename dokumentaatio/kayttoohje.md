@@ -16,19 +16,19 @@ DATABASE_FILENAME=database.sqlite
 Ennen ohjelman käynnistämistä, asenna riippuvuudet komennolla:
 
 ```bash
-python3 -m pipenv install
+poetry install
 ```
 
 Jonka jälkeen suorita alustustoimenpiteet komennolla:
 
 ```bash
-python3 -m pipenv run build
+poetry run invoke build
 ```
 
 Nyt ohjelman voi käynnistää komennolla:
 
 ```
-python3 -m pipenv run start
+poetry run invoke start
 ```
 
 ## Kirjautuminen

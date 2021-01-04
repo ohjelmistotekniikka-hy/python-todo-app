@@ -1,3 +1,5 @@
+⚠️ **Huom! Referenssisovelluksen, kuten muidenkin sovellusten plagiointi, johtaa projektin hylkäämiseen.**
+
 # TodoApp
 
 Sovelluksen avulla käyttäjien on mahdollista pitää kirjaa tekemättömistään töistä eli todoista. Sovellusta on mahdollista käyttää useamman rekisteröityneen käyttäjän, joilla kaikilla on oma yksilöllinen tehtävälistansa.
@@ -6,7 +8,7 @@ Sovellus toimii myös Helsingin yliopiston Tietojenkäsittelytieteen kurssin Ohj
 
 ## Huomio Python-versiosta
 
-Sovelluksen toiminta on testattu Python-versiolla `3.9.0`. Etenkin vanhempien Python-versioiden kanssa saattaa ilmentyä ongelmia.
+Sovelluksen toiminta on testattu Python-versiolla `3.6.0`. Etenkin vanhempien Python-versioiden kanssa saattaa ilmentyä ongelmia.
 
 ## Dokumentaatio
 
@@ -21,19 +23,19 @@ Sovelluksen toiminta on testattu Python-versiolla `3.9.0`. Etenkin vanhempien Py
 1. Asenna riippuvuut komennolla:
 
 ```bash
-python3 -m pipenv install
+poetry install
 ```
 
 2. Suorita vaadittavat alustustoimenpiteet komennolla:
 
 ```bash
-python3 -m pipenv run build
+poetry run invoke build
 ```
 
 3. Käynnistä sovellus komennolla:
 
 ```bash
-python3 -m pipenv run start
+poetry run invoke start
 ```
 
 ## Komentorivitoiminnot
@@ -43,7 +45,7 @@ python3 -m pipenv run start
 Ohjelman pystyy suorittamaan komennolla:
 
 ```bash
-python3 -m pipenv run start
+poetry run invoke start
 ```
 
 ### Testaus
@@ -51,21 +53,15 @@ python3 -m pipenv run start
 Testit suoritetaan komennolla:
 
 ```bash
-python3 -m pipenv run test
+poetry run invoke test
 ```
 
 ### Testikattavuus
 
-Testikattavuus kerätään kommenolla:
+Testikattavuusraportin voi generoida komennolla:
 
 ```bash
-python3 -m pipenv run coverage
-```
-
-Tämän jälkeen raportin voi generoida komennolla:
-
-```bash
-python3 -m pipenv run coverage-report
+poetry run invoke coverage-report
 ```
 
 Raportti generoituu _htmlcov_-hakemistoon.
@@ -75,5 +71,5 @@ Raportti generoituu _htmlcov_-hakemistoon.
 Tiedoston [.pylintrc](./.pylintrc) määrittelemät tarkistukset voi suorittaa komennolla:
 
 ```bash
-python3 -m pipenv run lint
+poetry run invoke lint
 ```
