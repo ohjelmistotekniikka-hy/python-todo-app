@@ -20,7 +20,7 @@ Sovelluksen toiminta on testattu Python-versiolla `3.6.0`. Etenkin vanhempien Py
 
 ## Asennus
 
-1. Asenna riippuvuut komennolla:
+1. Asenna riippuvuudet komennolla:
 
 ```bash
 poetry install
