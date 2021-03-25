@@ -13,7 +13,7 @@ def build(ctx):
 
 @task
 def test(ctx):
-    ctx.run("pytest")
+    ctx.run("pytest src")
 
 
 @task
