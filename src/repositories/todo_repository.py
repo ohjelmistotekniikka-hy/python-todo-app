@@ -5,13 +5,37 @@ from config import TODOS_FILE_PATH
 
 
 class TodoRepository:
+    """Tehtäviin liittyvistä tietokantaoperaatioista vastaava luokka.
+    """
+
     def __init__(self, file_path):
+        """Luokan konstruktori.
+
+        Args:
+            file_path: Polku tiedostoon, johon tehtävät tallennetaan.
+        """
+
         self._file_path = file_path
 
     def find_all(self):
+        """Palauttaa kaikki tehtävät.
+
+        Returns:
+            Palauttaa listan Todo-olioita.
+        """
+
         return self._read()
 
     def find_by_username(self, username):
+        """Palauttaa käyttäjän tehtävät.
+
+        Args:
+            username: Käyttäjän käyttäjätunnus, jonka tehtävät palautetaan.
+
+        Returns:
+            Palauttaa listan Todo-olioita.
+        """
+
         todos = self.find_all()
 
         user_todos = filter(
@@ -20,6 +44,15 @@ class TodoRepository:
         return list(user_todos)
 
     def create(self, todo):
+        """Tallentaa tehtävän tietokantaan.
+
+        Args:
+            todo: Tallennettava tehtävä Todo-oliona.
+
+        Returns:
+            Tallennettu tehtävä Todo-oliona.
+        """
+
         todos = self.find_all()
 
         todos.append(todo)
@@ -29,6 +62,15 @@ class TodoRepository:
         return todo
 
     def set_done(self, todo_id, done=True):
+        """Asettaa tehtävän tehdy-statuksen.
+
+        Args:
+            todo_id: Tehtävän id, jonka tehty-status muutetaan.
+            done:
+                Vapaaehtoinen, oletusarvo True.
+                Boolean-arvo, joka asetetaan tehtävän tehty-statukseksi.
+        """
+
         todos = self.find_all()
 
         for todo in todos:
@@ -39,6 +81,12 @@ class TodoRepository:
         self._write(todos)
 
     def delete(self, todo_id):
+        """Poistaa tietyn tehtävän.
+
+        Args:
+            todo_id: Poistettavan tehtävän id.
+        """
+
         todos = self.find_all()
 
         todos_without_id = filter(lambda todo: todo.id != todo_id, todos)
@@ -46,10 +94,12 @@ class TodoRepository:
         self._write(todos_without_id)
 
     def delete_all(self):
+        """Poistaa kaikki tehtävät.
+        """
+
         self._write([])
 
     def _ensure_file_exists(self):
-        # luodaan tiedosto, jos se ei ole vielä olemassa
         Path(self._file_path).touch()
 
     def _read(self):

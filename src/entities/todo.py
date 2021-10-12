@@ -12,7 +12,7 @@ class Todo:
     """
 
     def __init__(self, content, done=False, user=None, todo_id=None):
-        """Luokan konstruktori. Luo uuden tehtävän.
+        """Luokan konstruktori, joka luo uuden tehtävän.
 
         Args:
             content: Merkkijonoarvo, joka kuvaa tehtävän sisältöä.

@@ -7,7 +7,7 @@ class User:
     """
 
     def __init__(self, username, password):
-        """Luokan konstruktori. Luo uuden käyttäjän.
+        """Luokan konstruktori, joka luo uuden käyttäjän.
 
         Args:
             username: Merkkijonoarvo, joka kuvaa käyttäjän käyttäjätunnusta.
