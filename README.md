@@ -8,7 +8,7 @@ Sovellus toimii myös Helsingin yliopiston Tietojenkäsittelytieteen kurssin Ohj
 
 ## Huomio Python-versiosta
 
-Sovelluksen toiminta on testattu Python-versiolla `3.6.0`. Etenkin vanhempien Python-versioiden kanssa saattaa ilmentyä ongelmia.
+Sovelluksen toiminta on testattu Python-versiolla `3.8`. Etenkin vanhempien Python-versioiden kanssa saattaa ilmentyä ongelmia.
 
 ## Dokumentaatio
 
