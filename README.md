@@ -1,4 +1,4 @@
-⚠️ **Huom! Referenssisovelluksen, kuten muidenkin sovellusten plagiointi, johtaa projektin hylkäämiseen.**
+⚠️ **Huom! Referenssisovelluksen (mukaanlukien dokumentaatio), kuten muidenkin sovellusten plagiointi, johtaa projektin hylkäämiseen.**
 
 # TodoApp
 
