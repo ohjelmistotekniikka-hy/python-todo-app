@@ -24,7 +24,19 @@ Kun sovelluksen todo-listan tilanne muuttuu, eli uusi käyttäjä kirjautuu, tod
 
 Sovelluksen loogisen tietomallin muodostavat luokat [User](https://github.com/ohjelmistotekniikka-hy/python-todo-app/blob/master/src/entities/user.py) ja [Todo](https://github.com/ohjelmistotekniikka-hy/python-todo-app/blob/master/src/entities/todo.py), jotka kuvaavat käyttäjiä ja käyttäjien tehtäviä:
 
-![Tietomalli](./kuvat/tietomalli.png)
+```mermaid
+ classDiagram
+      Todo "*" --> "1" User
+      class User{
+          username
+          password
+      }
+      class Todo{
+          id
+          content
+          done
+      }
+```
 
 Toiminnallisista kokonaisuuksista vastaa luokkan [TodoService](https://github.com/ohjelmistotekniikka-hy/python-todo-app/blob/master/src/services/todo_service.py) ainoa olio. Luokka tarjoaa kaikille käyttäliittymän toiminnoille oman metodin. Näitä ovat esimerkiksi:
 
@@ -70,7 +82,19 @@ Kuvataan seuraavaksi sovelluksen toimintalogiikka muutaman päätoiminnallisuude
 
 Kun kirjautumisnäkymän syötekenttiin kirjoitetetataan käyttäjätunnus ja salasana, jonka jälkeen klikataan painiketta _Login_, etenee sovelluksen kontrolli seuraavasti:
 
-![](./kuvat/sekvenssi-kirjautuminen.png)
+```mermaid
+sequenceDiagram
+  actor User
+  participant UI
+  participant TodoService
+  participant UserRepository
+  User->>UI: click "Login" button
+  UI->>TodoService: login("kalle", "kalle123")
+  TodoService->>UserRepository: find_by_username("kalle")
+  UserRepository-->>TodoService: user
+  TodoService-->>UI: user
+  UI->UI: show_todos_view()
+```
 
 Painikkeen painamiseen reagoiva [tapahtumankäsittelijä](https://github.com/ohjelmistotekniikka-hy/python-todo-app/blob/master/src/ui/login_view.py#L18) kutsuu sovelluslogiikan `TodoService` metodia [login](https://github.com/ohjelmistotekniikka-hy/python-todo-app/blob/master/src/services/todo_service.py#L87) antaen parametriksi käyttäjätunnuksen ja salasanan. Sovelluslogiikka selvittää `UserRepository`:n avulla onko käyttäjätunnus olemassa. Jos on, tarkastetaan täsmääkö salasanat. Jos salasanat täsmäävät, kirjautuminen onnistuu. Tämän seurauksena käyttöliittymä vaihtaa näkymäksi `TodosView`:n, eli sovelluksen varsinaisen päänäkymän ja renderöi näkymään kirjautuneen käyttäjän todot eli tekemättömät tehtävät.
 
@@ -78,7 +102,23 @@ Painikkeen painamiseen reagoiva [tapahtumankäsittelijä](https://github.com/ohj
 
 Kun uuden käyttäjän luomisnäkymässä on syötetty käyttäjätunnus, joka ei ole jo käytössä sekä salasana, jonka jälkeen klikataan painiketta "Create" etenee sovelluksen kontrolli seuraavasti:
 
-![](./kuvat/sekvenssi-kayttajan-luonti.png)
+```mermaid
+sequenceDiagram
+  actor User
+  participant UI
+  participant TodoService
+  participant UserRepository
+  participant matti
+  User->>UI: click "Create user" button
+  UI->>TodoService: create_user("matti", "matti123")
+  TodoService->>UserRepository: find_by_username("matti")
+  UserRepository-->>TodoService: None
+  TodoService->>matti: User("matti", "matti123")
+  TodoService->>UserRepository: create(matti)
+  UserRepository-->>TodoService: user
+  TodoService-->>UI: user
+  UI->>UI: show_todos_view()
+```
 
 [Tapahtumakäsittelijä](https://github.com/ohjelmistotekniikka-hy/python-todo-app/blob/master/src/ui/create_user_view.py#L18) kutsuu sovelluslogiikan metodia [create_user](https://github.com/ohjelmistotekniikka-hy/python-todo-app/blob/master/src/services/todo_service.py#L130) antaen parametriksi luotavan käyttäjän tiedot. Sovelluslogiikka selvittää `UserRepository`:n avulla onko käyttäjätunnus olemassa. Jos ei, eli uuden käyttäjän luominen on mahdollista, luo sovelluslogiikka `User`-olion ja tallettaa sen kutsumalla `UserRepository`:n metodia `create`. Tästä seurauksena on se, että käyttöliittymä vaihtaa näkymäksi `TodosView`:n. Luotu käyttäjä kirjataan automaattisesti sisään.
 
@@ -86,7 +126,21 @@ Kun uuden käyttäjän luomisnäkymässä on syötetty käyttäjätunnus, joka e
 
 Uuden todon luovan "Create"-painikkeen klikkaamisen jälkeen sovelluksen kontrolli eteneeseuraavasti:
 
-![](./kuvat/sekvenssi-todon-luonti.png)
+```mermaid
+sequenceDiagram
+  actor User
+  participant UI
+  participant TodoService
+  participant TodoRepository
+  participant todo
+  User->>UI: click "Create"
+  UI->>TodoService: create_todo("vie roskat")
+  TodoService->>todo: Todo("vie roskat", kalle)
+  TodoService->>TodoRepository: create(todo)
+  TodoRepository-->>TodoService: todo
+  TodoService-->>UI: todo 
+  UI->>UI: initialize_todo_list()
+```
 
 [Tapahtumakäsittelijä](https://github.com/ohjelmistotekniikka-hy/python-todo-app/blob/master/src/ui/todos_view.py#L106) kutsuu sovelluslogiikan metodia [create_todo](https://github.com/ohjelmistotekniikka-hy/python-todo-app/blob/master/src/services/todo_service.py#L49) antaen parametriksi luotavan työn tiedot. Sovelluslogiikka luo uuden `Todo`-olion ja tallettaa sen kutsumalla `TodoRepository`:n metodia `create`. Tästä seurauksena on se, että käyttöliittymä päivittää näytettävät todot kutsumalla omaa metodiaan `initialize_todo_list`.
 
