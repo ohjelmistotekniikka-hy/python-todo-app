@@ -107,7 +107,7 @@ class TodoRepository:
 
         self._ensure_file_exists()
 
-        with open(self._file_path) as file:
+        with open(self._file_path, encoding='utf-8') as file:
             for row in file:
                 row = row.replace('\n', '')
                 parts = row.split(';')
@@ -129,7 +129,7 @@ class TodoRepository:
     def _write(self, todos):
         self._ensure_file_exists()
 
-        with open(self._file_path, 'w') as file:
+        with open(self._file_path, 'w', encoding='utf-8') as file:
             for todo in todos:
                 done_string = '1' if todo.done else '0'
                 username = todo.user.username if todo.user else ''
