@@ -17,6 +17,7 @@ Sovelluksen toiminta on testattu Python-versiolla `3.8`. Etenkin vanhempien Pyth
 - [Arkkitehtuurikuvaus](./dokumentaatio/arkkitehtuuri.md)
 - [Testausdokumentti](./dokumentaatio/testaus.md)
 - [Työaikakirjanpito](./dokumentaatio/tuntikirjanpito.md)
+- [Changelog](./dokumentaatio/changelog.md)
 
 ## Asennus
 
