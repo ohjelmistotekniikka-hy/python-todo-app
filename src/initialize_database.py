@@ -10,9 +10,9 @@ def drop_tables(connection):
 
     cursor = connection.cursor()
 
-    cursor.execute('''
+    cursor.execute("""
         drop table if exists users;
-    ''')
+    """)
 
     connection.commit()
 
@@ -26,19 +26,18 @@ def create_tables(connection):
 
     cursor = connection.cursor()
 
-    cursor.execute('''
+    cursor.execute("""
         create table users (
             username text primary key,
             password text
         );
-    ''')
+    """)
 
     connection.commit()
 
 
 def initialize_database():
-    """Alustaa tietokantataulut.
-    """
+    """Alustaa tietokantataulut."""
 
     connection = get_database_connection()
 
@@ -46,5 +45,5 @@ def initialize_database():
     create_tables(connection)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     initialize_database()

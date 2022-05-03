@@ -107,14 +107,14 @@ class TodoRepository:
 
         self._ensure_file_exists()
 
-        with open(self._file_path, encoding='utf-8') as file:
+        with open(self._file_path, encoding="utf-8") as file:
             for row in file:
-                row = row.replace('\n', '')
-                parts = row.split(';')
+                row = row.replace("\n", "")
+                parts = row.split(";")
 
                 todo_id = parts[0]
                 content = parts[1]
-                done = parts[2] == '1'
+                done = parts[2] == "1"
                 username = parts[3]
 
                 user = user_repository.find_by_username(
@@ -129,14 +129,14 @@ class TodoRepository:
     def _write(self, todos):
         self._ensure_file_exists()
 
-        with open(self._file_path, 'w', encoding='utf-8') as file:
+        with open(self._file_path, "w", encoding="utf-8") as file:
             for todo in todos:
-                done_string = '1' if todo.done else '0'
-                username = todo.user.username if todo.user else ''
+                done_string = "1" if todo.done else "0"
+                username = todo.user.username if todo.user else ""
 
-                row = f'{todo.id};{todo.content};{done_string};{username}'
+                row = f"{todo.id};{todo.content};{done_string};{username}"
 
-                file.write(row+'\n')
+                file.write(row+"\n")
 
 
 todo_repository = TodoRepository(TODOS_FILE_PATH)

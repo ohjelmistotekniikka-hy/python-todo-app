@@ -3,7 +3,20 @@ from services.todo_service import todo_service
 
 
 class TodoListView:
+    """Tehtävien listauksesta vastaava näkymä."""
+
     def __init__(self, root, todos, handle_set_todo_done):
+        """Luokan konstruktori. Luo uuden tehtävälistausnäkymän.
+
+        Args:
+            root:
+                TKinter-elementti, jonka sisään näkymä alustetaan.
+            todos:
+                Lista Todo-olioita, jotka näkymässä näytetään
+            handle_set_todo_done:
+                Kutsuttava-arvo, jota kutsutaan kun tehtävä valmistuu. Saa argumentiksi valmistuneen tehtävän id-arvon.
+        """
+
         self._root = root
         self._todos = todos
         self._handle_set_dodo_done = handle_set_todo_done
@@ -12,9 +25,11 @@ class TodoListView:
         self._initialize()
 
     def pack(self):
+        """"Näyttää näkymän."""
         self._frame.pack(fill=constants.X)
 
     def destroy(self):
+        """"Tuhoaa näkymän."""
         self._frame.destroy()
 
     def _initialize_todo_item(self, todo):
@@ -23,7 +38,7 @@ class TodoListView:
 
         set_done_button = ttk.Button(
             master=item_frame,
-            text='Done',
+            text="Done",
             command=lambda: self._handle_set_dodo_done(todo.id)
         )
 
@@ -48,7 +63,17 @@ class TodoListView:
 
 
 class TodosView:
+    """Tehtävien listauksesta ja lisäämisestä vastaava näkymä."""
+
     def __init__(self, root, handle_logout):
+        """Luokan konstruktori. Luo uuden tehtävänäkymän.
+
+        Args:
+            root:
+                TKinter-elementti, jonka sisään näkymä alustetaan.
+            handle_logout:
+                Kutsuttava-arvo, jota kutsutaan kun käyttäjä kirjautuu ulos.
+        """
         self._root = root
         self._handle_logout = handle_logout
         self._user = todo_service.get_current_user()
@@ -60,9 +85,11 @@ class TodosView:
         self._initialize()
 
     def pack(self):
+        """"Näyttää näkymän."""
         self._frame.pack(fill=constants.X)
 
     def destroy(self):
+        """"Tuhoaa näkymän."""
         self._frame.destroy()
 
     def _logout_handler(self):
@@ -90,12 +117,12 @@ class TodosView:
     def _initialize_header(self):
         user_label = ttk.Label(
             master=self._frame,
-            text=f'Logged in as {self._user.username}'
+            text=f"Logged in as {self._user.username}"
         )
 
         logout_button = ttk.Button(
             master=self._frame,
-            text='Logout',
+            text="Logout",
             command=self._logout_handler
         )
 
@@ -122,7 +149,7 @@ class TodosView:
 
         create_todo_button = ttk.Button(
             master=self._frame,
-            text='Create',
+            text="Create",
             command=self._handle_create_todo
         )
 

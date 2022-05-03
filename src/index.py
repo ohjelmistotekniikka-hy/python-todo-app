@@ -4,7 +4,7 @@ from ui.ui import UI
 
 def main():
     window = Tk()
-    window.title('TodoApp')
+    window.title("Todo application")
 
     ui_view = UI(window)
     ui_view.start()
@@ -12,5 +12,5 @@ def main():
     window.mainloop()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

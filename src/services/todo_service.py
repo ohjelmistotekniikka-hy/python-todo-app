@@ -94,7 +94,7 @@ class TodoService:
         user = self._user_repository.find_by_username(username)
 
         if not user or user.password != password:
-            raise InvalidCredentialsError('Invalid username or password')
+            raise InvalidCredentialsError("Invalid username or password")
 
         self._user = user
 
@@ -141,7 +141,7 @@ class TodoService:
         existing_user = self._user_repository.find_by_username(username)
 
         if existing_user:
-            raise UsernameExistsError(f'Username {username} already exists')
+            raise UsernameExistsError(f"Username {username} already exists")
 
         user = self._user_repository.create(User(username, password))
 

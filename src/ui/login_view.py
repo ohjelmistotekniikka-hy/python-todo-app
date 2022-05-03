@@ -3,7 +3,20 @@ from services.todo_service import todo_service, InvalidCredentialsError
 
 
 class LoginView:
+    """Käyttäjän kirjautumisesta vastaava näkymä."""
+
     def __init__(self, root, handle_login, handle_show_create_user_view):
+        """Luokan konstruktori. Luo uuden kirjautumisnäkymän.
+
+        Args:
+            root:
+                TKinter-elementti, jonka sisään näkymä alustetaan.
+            handle_login:
+                Kutsuttava-arvo, jota kutsutaan kun käyttäjä kirjautuu sisään.
+            handle_show_create_user_view:
+                Kutsuttava-arvo, jota kutsutaan kun siirrytään rekisteröitymisnäkymään.
+        """
+
         self._root = root
         self._handle_login = handle_login
         self._handle_show_create_user_view = handle_show_create_user_view
@@ -16,9 +29,11 @@ class LoginView:
         self._initialize()
 
     def pack(self):
+        """"Näyttää näkymän."""
         self._frame.pack(fill=constants.X)
 
     def destroy(self):
+        """"Tuhoaa näkymän."""
         self._frame.destroy()
 
     def _login_handler(self):
@@ -29,7 +44,7 @@ class LoginView:
             todo_service.login(username, password)
             self._handle_login()
         except InvalidCredentialsError:
-            self._show_error('Invalid username or password')
+            self._show_error("Invalid username or password")
 
     def _show_error(self, message):
         self._error_variable.set(message)
@@ -39,7 +54,7 @@ class LoginView:
         self._error_label.grid_remove()
 
     def _initialize_username_field(self):
-        username_label = ttk.Label(master=self._frame, text='Username')
+        username_label = ttk.Label(master=self._frame, text="Username")
 
         self._username_entry = ttk.Entry(master=self._frame)
 
@@ -47,7 +62,7 @@ class LoginView:
         self._username_entry.grid(padx=5, pady=5, sticky=constants.EW)
 
     def _initialize_password_field(self):
-        password_label = ttk.Label(master=self._frame, text='Password')
+        password_label = ttk.Label(master=self._frame, text="Password")
 
         self._password_entry = ttk.Entry(master=self._frame)
 
@@ -62,7 +77,7 @@ class LoginView:
         self._error_label = ttk.Label(
             master=self._frame,
             textvariable=self._error_variable,
-            foreground='red'
+            foreground="red"
         )
 
         self._error_label.grid(padx=5, pady=5)
@@ -72,7 +87,7 @@ class LoginView:
 
         login_button = ttk.Button(
             master=self._frame,
-            text='Login',
+            text="Login",
             command=self._login_handler
         )
 
