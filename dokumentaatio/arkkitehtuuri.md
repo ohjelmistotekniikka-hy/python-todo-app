@@ -38,7 +38,7 @@ Sovelluksen loogisen tietomallin muodostavat luokat [User](https://github.com/oh
       }
 ```
 
-Toiminnallisista kokonaisuuksista vastaa luokkan [TodoService](https://github.com/ohjelmistotekniikka-hy/python-todo-app/blob/master/src/services/todo_service.py) ainoa olio. Luokka tarjoaa kaikille käyttäliittymän toiminnoille oman metodin. Näitä ovat esimerkiksi:
+Toiminnallisista kokonaisuuksista vastaa luokan [TodoService](https://github.com/ohjelmistotekniikka-hy/python-todo-app/blob/master/src/services/todo_service.py) ainoa olio. Luokka tarjoaa kaikille käyttäliittymän toiminnoille oman metodin. Näitä ovat esimerkiksi:
 
 - `login(username, password)`
 - `get_undone_todos()`
