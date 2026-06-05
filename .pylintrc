@@ -36,10 +36,6 @@ load-plugins=
 # Pickle collected data for later comparisons.
 persistent=yes
 
-# When enabled, pylint would attempt to guess common misconfiguration and emit
-# user-friendly hints instead of false-positive error messages.
-suggestion-mode=yes
-
 # Allow loading of arbitrary C extensions. Extensions are imported into the
 # active Python interpreter and may run arbitrary code.
 unsafe-load-any-extension=no
@@ -68,6 +64,8 @@ disable=raw-checker-failed,
         useless-suppression,
         deprecated-pragma,
         use-symbolic-message-instead,
+        use-implicit-booleaness-not-comparison-to-string,
+        use-implicit-booleaness-not-comparison-to-zero,
         missing-module-docstring,
         missing-function-docstring,
         missing-class-docstring
@@ -208,6 +206,10 @@ missing-member-hint-distance=1
 # The total number of similar names that should be taken in consideration when
 # showing a hint for a missing member.
 missing-member-max-choices=1
+
+# Regex pattern to define which classes are considered mixins ignore-mixin-
+# members is set to 'yes'
+mixin-class-rgx=.*[Mm]ixin
 
 # List of decorators that change the signature of a decorated function.
 signature-mutators=
@@ -517,5 +519,5 @@ min-public-methods=0
 
 # Exceptions that will emit a warning when being caught. Defaults to
 # "BaseException, Exception".
-overgeneral-exceptions=BaseException,
-                       Exception
+overgeneral-exceptions=builtins.BaseException,
+                       builtins.Exception
