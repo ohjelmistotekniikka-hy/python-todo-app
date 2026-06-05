@@ -14,7 +14,7 @@ Repositorio-luokkia `TodoRepository` ja `UserRepository` testataan ainoastaan te
 
 ### Testauskattavuus
 
-Käyttöliittymäkerrosta lukuunottamatta sovelluksen testauksen haarautumakattavuus on 95%
+Käyttöliittymäkerrosta lukuunottamatta sovelluksen testikattavuus on 94 %
 
 ![](./kuvat/testikattavuus.png)
 
